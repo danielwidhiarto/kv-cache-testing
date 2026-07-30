@@ -148,7 +148,12 @@ class AESDatasetLoader:
             "### STUDENT ESSAY TO EVALUATE\n"
             f"{student_essay}\n\n"
             "### EVALUATION INSTRUCTION\n"
-            "Output the evaluation result starting with the score format 'Score: X' where X is an integer from 1 to 6."
+            "Based on the rubric above, evaluate the student essay and respond with ONLY the score.\n"
+            "Your response MUST start with exactly this format: 'Score: X'\n"
+            "where X is a single integer between 1 and 6.\n"
+            "Example: Score: 4\n"
+            "Do NOT write anything before 'Score:'. Begin your response with 'Score:' immediately."
         )
         return prompt
+
 
