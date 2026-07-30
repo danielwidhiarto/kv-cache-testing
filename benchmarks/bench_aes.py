@@ -88,13 +88,13 @@ def run_aes_benchmark():
 
     model = AutoModelForCausalLM.from_pretrained(
         args.model,
-        dtype=dtype,
+        torch_dtype=dtype,
         attn_implementation="eager",
         low_cpu_mem_usage=True,
     ).to(device)
 
     # Detect if this is an instruct/chat model
-    is_instruct = any(kw in args.model.lower() for kw in ["instruct", "chat", "it", "-it"])
+    is_instruct = any(kw in args.model.lower() for kw in ["instruct", "chat", "-it", "qwen3-", "gemma-", "mistral"])
     print(f"• Model Type: {'Instruct/Chat (Chat Template ON)' if is_instruct else 'Base Causal (Text Continuation)'}")
 
     # Load Dataset Samples

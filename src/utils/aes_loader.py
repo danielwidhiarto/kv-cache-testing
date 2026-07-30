@@ -229,7 +229,7 @@ ASSIGNMENT: Discuss the social and environmental impacts of transforming modern 
                     "essay_id": 1000 + idx * 10 + essays.index(essay),
                     "prompt_name": topic,
                     "assignment": assign,
-                    "source_text": source,
+                    "source_text_1": source,
                     "full_text": essay,
                     "score": score,
                 })
