@@ -5,3 +5,4 @@ __pycache__/
 .antigravity/
 dataset/*.csv
 results/*.csv
+!dataset/ASAP2_train_sourcetexts.zip

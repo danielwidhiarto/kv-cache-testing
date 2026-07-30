@@ -9,11 +9,20 @@ class AESDatasetLoader:
     """Loads student essays, rubrics, and source texts from ASAP 2.0 CSV dataset."""
 
     def __init__(self, csv_path: str = "dataset/ASAP2_train_sourcetexts.csv"):
+        zip_path = "dataset/ASAP2_train_sourcetexts.zip"
+        if not os.path.exists(csv_path) and os.path.exists(zip_path):
+            import zipfile
+            print(f"📦 Extracting ASAP 2.0 dataset from {zip_path}...")
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall("dataset/")
+            print("✓ ASAP 2.0 dataset extracted successfully!")
+
         if not os.path.exists(csv_path):
             os.makedirs(os.path.dirname(csv_path), exist_ok=True)
             self._generate_fallback_dataset(csv_path)
         self.csv_path = csv_path
         self._df: Optional[pd.DataFrame] = None
+
 
     def _generate_fallback_dataset(self, csv_path: str):
         """Generates realistic ASAP 2.0 dataset samples for Google Colab if local file is missing."""
