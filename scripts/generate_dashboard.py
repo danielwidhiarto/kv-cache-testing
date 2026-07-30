@@ -1,4 +1,4 @@
-"""Script to update results/dashboard.html using the exact original layout and updating data from aes_benchmark.csv."""
+"""Script to update results/dashboard.html with 100% complete data from aes_benchmark.csv."""
 
 import os
 import sys
@@ -44,7 +44,7 @@ def update_dashboard():
     qwk_base = round(quadratic_weighted_kappa(valid_base["human_score"].values, valid_base["predicted_score"].values), 2) if not valid_base.empty else 0.0
     qwk_diff = round(qwk_aege - qwk_base, 2)
 
-    # Generate Table Rows
+    # Generate Table Rows for ALL 70 Benchmark Runs
     table_rows = []
     for s_idx in sorted(df["sample_idx"].unique()):
         sample_df = df[df["sample_idx"] == s_idx]
@@ -55,12 +55,18 @@ def update_dashboard():
             topic = r["prompt_name"]
             p_tok = r["prompt_tokens"]
             c_bud = r["max_cache_size"]
+            ev_tok = r["removed_tokens"]
             ev_pct = round(r["removed_pct"], 1)
             pol = r["policy"]
             lat = r["latency_sec"]
             ttft = r["ttft_sec"]
             itl = r["itl_ms"]
             tput = r["throughput_tok_sec"]
+            peak_kv = r["peak_cache_tokens"]
+            p_score = r["predicted_score"]
+            h_score = r["human_score"]
+
+            score_str = f"Score: {int(p_score)}" if not pd.isna(p_score) else "No Score"
 
             is_aege = pol == "aege"
             is_base = pol == "FullCache"
@@ -85,7 +91,22 @@ def update_dashboard():
                 else:
                     badge = f'<span class="badge badge-pink">{ratio:.2f}x slower</span>'
 
-            row_html = f'<tr{row_cls}><td><strong>"{topic}"</strong></td><td>{p_tok}</td><td>{c_bud}</td><td>{ev_pct}%</td><td>{pol_str}</td><td>{r["peak_cache_tokens"]:,}</td><td>{lat:.2f}s</td><td>{ttft:.3f}s</td><td>{itl:.1f}ms</td><td>{tput:.1f} tok/s</td><td>{badge}</td></tr>'
+            row_html = (
+                f'<tr{row_cls}>'
+                f'<td><strong>"{topic}"</strong> (S#{s_idx})</td>'
+                f'<td>{p_tok:,}</td>'
+                f'<td>{ev_tok:,} ({ev_pct}%)</td>'
+                f'<td>{c_bud:,}</td>'
+                f'<td>{pol_str}</td>'
+                f'<td><strong>{score_str}</strong> (H: {int(h_score)})</td>'
+                f'<td><strong>{peak_kv:,}</strong></td>'
+                f'<td>{lat:.2f}s</td>'
+                f'<td>{ttft:.3f}s</td>'
+                f'<td>{itl:.1f}ms</td>'
+                f'<td>{tput:.1f} tok/s</td>'
+                f'<td>{badge}</td>'
+                f'</tr>'
+            )
             table_rows.append(row_html)
 
     table_body_html = "\n".join(table_rows)
@@ -95,18 +116,18 @@ def update_dashboard():
     for s_idx in sorted(df["sample_idx"].unique()):
         sample_df = df[df["sample_idx"] == s_idx]
         topic = sample_df["prompt_name"].iloc[0]
-        h_score = sample_df["human_score"].iloc[0]
+        h_score = int(sample_df["human_score"].iloc[0])
         
         base_r = sample_df[sample_df["policy"] == "FullCache"]
         aege_r = sample_df[sample_df["policy"] == "aege"]
 
-        base_pred = base_r["predicted_score"].values[0] if not base_r.empty and not pd.isna(base_r["predicted_score"].values[0]) else "N/A"
-        aege_pred = aege_r["predicted_score"].values[0] if not aege_r.empty and not pd.isna(aege_r["predicted_score"].values[0]) else "N/A"
+        base_pred = int(base_r["predicted_score"].values[0]) if not base_r.empty and not pd.isna(base_r["predicted_score"].values[0]) else "N/A"
+        aege_pred = int(aege_r["predicted_score"].values[0]) if not aege_r.empty and not pd.isna(aege_r["predicted_score"].values[0]) else "N/A"
 
         is_match = base_pred == aege_pred
         match_str = "✅ Same" if is_match else "⚠️ Differs"
 
-        qwk_rows.append(f'<tr><td style="padding:5px;border:1px solid #fed7aa">"{topic}"</td><td style="text-align:center;border:1px solid #fed7aa">{h_score}</td><td style="text-align:center;border:1px solid #fed7aa">{base_pred}</td><td style="text-align:center;border:1px solid #fed7aa">{aege_pred}</td><td style="text-align:center;border:1px solid #fed7aa">{match_str}</td></tr>')
+        qwk_rows.append(f'<tr><td style="padding:5px;border:1px solid #fed7aa">"{topic}" (Sample #{s_idx})</td><td style="text-align:center;border:1px solid #fed7aa">{h_score}</td><td style="text-align:center;border:1px solid #fed7aa">Score: {base_pred}</td><td style="text-align:center;border:1px solid #fed7aa">Score: {aege_pred}</td><td style="text-align:center;border:1px solid #fed7aa">{match_str}</td></tr>')
 
     qwk_table_body = "\n".join(qwk_rows)
 
@@ -137,7 +158,7 @@ def update_dashboard():
     padding: 2.5rem 2rem;
     line-height: 1.5;
   }}
-  .container {{ max-width: 1200px; margin: 0 auto; }}
+  .container {{ max-width: 1300px; margin: 0 auto; }}
   header {{ margin-bottom: 2rem; }}
   h1 {{ font-size: 1.75rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }}
   .subtitle {{ color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }}
@@ -400,9 +421,10 @@ def update_dashboard():
           <tr>
             <th>Prompt Topic</th>
             <th>Prompt Tokens</th>
+            <th>Evicted Tokens</th>
             <th>Cache Budget</th>
-            <th>Eviction %</th>
             <th>Policy</th>
+            <th>Predicted Score</th>
             <th>Peak KV Tokens</th>
             <th>Total Latency</th>
             <th>TTFT (Prefill)</th>
@@ -427,7 +449,7 @@ def update_dashboard():
     with open(out_html_path, "w", encoding="utf-8") as f:
         f.write(html_template)
 
-    print(f"🎉 Restored & Updated Dashboard successfully created at: {out_html_path}")
+    print(f"🎉 Exhaustive Dashboard successfully updated at: {out_html_path}")
 
 if __name__ == "__main__":
     update_dashboard()
