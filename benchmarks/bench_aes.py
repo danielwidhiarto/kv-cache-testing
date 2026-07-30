@@ -187,22 +187,31 @@ def run_aes_benchmark():
                     if r["generated_output"] == base_out:
                         exact_matches += 1
                 
-                digits = [int(c) for c in r["generated_output"] if c.isdigit()]
-                if digits:
+                # Robust extraction of score digit (1-6)
+                import re
+                score_match = re.search(r'(?:score|rating|grade)?\s*[:=]?\s*([1-6])', str(r["generated_output"]), re.IGNORECASE)
+                if score_match:
                     has_explicit_digits = True
-                    y_pred.append(digits[0])
+                    y_pred.append(int(score_match.group(1)))
+                else:
+                    digits = [int(c) for c in str(r["generated_output"]) if c.isdigit() and 1 <= int(c) <= 6]
+                    if digits:
+                        has_explicit_digits = True
+                        y_pred.append(digits[0])
             
             match_pct = (exact_matches / len(sub_df) * 100) if len(sub_df) > 0 else 0.0
             
             if has_explicit_digits and len(y_pred) == len(y_true):
+                from src.metrics.quality_metrics import quadratic_weighted_kappa
                 qwk_score = quadratic_weighted_kappa(y_true, y_pred)
                 qwk_str = f"{qwk_score:.4f}"
             else:
-                qwk_str = "N/A (Base Model Text Continuation)"
+                qwk_str = "N/A (Text Continuation / No explicit 1-6 score)"
 
             print(f"• Policy: {pol_label:<12} | Output Match vs FullCache: {match_pct:.1f}% | QWK Score: {qwk_str}")
 
     print(f"\n✅ Benchmark completed successfully! Results saved to: {out_csv}")
+
 
 
 
