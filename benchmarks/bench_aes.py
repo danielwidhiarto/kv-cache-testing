@@ -27,7 +27,7 @@ def parse_args():
 
 
     parser.add_argument("--num-samples", type=int, default=3, help="Number of AES essay samples to test")
-    parser.add_argument("--max-cache-size", type=int, default=512, help="Max KV cache size budget")
+    parser.add_argument("--max-cache-size", type=int, default=256, help="Max KV cache size budget")
     parser.add_argument("--max-new-tokens", type=int, default=64, help="Max new tokens to generate per sample")
     parser.add_argument("--dataset-path", type=str, default="dataset/ASAP2_train_sourcetexts.csv", help="Path to ASAP 2.0 CSV")
     parser.add_argument("--output-dir", type=str, default="results", help="Directory to save CSV benchmark output")
@@ -88,9 +88,9 @@ def run_aes_benchmark():
         if is_instruct and hasattr(tokenizer, 'apply_chat_template'):
             messages = [{"role": "user", "content": prompt_text}]
             formatted = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-            inputs = tokenizer(formatted, return_tensors="pt", truncation=True, max_length=1400).to(device)
+            inputs = tokenizer(formatted, return_tensors="pt", truncation=True, max_length=4096).to(device)
         else:
-            inputs = tokenizer(prompt_text, return_tensors="pt", truncation=True, max_length=960).to(device)
+            inputs = tokenizer(prompt_text, return_tensors="pt", truncation=True, max_length=3072).to(device)
 
 
 
