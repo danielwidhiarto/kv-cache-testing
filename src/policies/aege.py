@@ -30,13 +30,22 @@ class AEGEPolicy(EvictionPolicy):
         window_size: int = 64,
         entropy_weight: float = 0.3,
         temporal_decay: float = 0.95,
+        adaptive_budget: bool = False,
+        entropy_threshold: float = 0.4,
+        layer_idx: Optional[int] = None,
+        total_layers: Optional[int] = None,
     ):
         self.sink_size = sink_size
         self.window_size = window_size
         self.entropy_weight = entropy_weight
         self.temporal_decay = temporal_decay
+        self.adaptive_budget = adaptive_budget
+        self.entropy_threshold = entropy_threshold
+        self.layer_idx = layer_idx
+        self.total_layers = total_layers
         self._cumulative_attn: Optional[torch.Tensor] = None
         self._entropy_history: Optional[torch.Tensor] = None
+        self._has_entropy = False
 
     def _compute_entropy(self, attention_scores: torch.Tensor) -> torch.Tensor:
         """Compute attention entropy per key position.
@@ -147,7 +156,24 @@ class AEGEPolicy(EvictionPolicy):
         # score = attn × (1 - entropy_weight × entropy)
         scores = norm_attn * (1.0 - self.entropy_weight * norm_entropy)
 
-        # Evict lowest scores
+        # Dynamic / Adaptive Eviction Mode
+        if self.adaptive_budget:
+            # Scale threshold by layer depth if available:
+            # Shallow layers evict more aggressively; Deep layers protect more reasoning
+            thresh = self.entropy_threshold
+            if self.layer_idx is not None and self.total_layers is not None and self.total_layers > 1:
+                depth_ratio = self.layer_idx / (self.total_layers - 1)
+                thresh = self.entropy_threshold * (1.2 - 0.4 * depth_ratio)  # Higher threshold in shallow layers = more evictions
+
+            below_thresh = (scores < thresh).nonzero(as_tuple=True)[0]
+            if below_thresh.numel() > 0:
+                # Evict tokens below threshold, up to max budget or evictable count
+                k = min(num_to_evict, below_thresh.numel())
+                _, local_k = torch.topk(scores[below_thresh], k, largest=False)
+                evict_indices = below_thresh[local_k] + middle_start
+                return evict_indices
+
+        # Fixed Budget Mode: Evict lowest scores
         _, lowest_local = torch.topk(scores, num_to_evict, largest=False)
         evict_indices = lowest_local + middle_start  # offset to global positions
 
@@ -172,7 +198,8 @@ class AEGEPolicy(EvictionPolicy):
 
     @property
     def name(self) -> str:
-        return f"aege_s{self.sink_size}_w{self.window_size}_ew{self.entropy_weight}"
+        suffix = f"_adaptive_t{self.entropy_threshold}" if self.adaptive_budget else ""
+        return f"aege_s{self.sink_size}_w{self.window_size}_ew{self.entropy_weight}{suffix}"
 
     @property
     def requires_attention_scores(self) -> bool:

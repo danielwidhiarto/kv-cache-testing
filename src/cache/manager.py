@@ -91,13 +91,19 @@ class CacheManager:
             legacy.append((layer[0], layer[1]))
         return tuple(legacy)
 
-    def _new_layer_cache(self) -> KVCache:
+    def _new_layer_cache(self, layer_idx: int = 0, total_layers: int = 1) -> KVCache:
         if self.policy is None:
             return FullCache(max_size=self.max_cache_size)
-        # Attention statistics are independent for each transformer layer.
+        
+        pol = copy.deepcopy(self.policy)
+        if hasattr(pol, "layer_idx"):
+            pol.layer_idx = layer_idx
+        if hasattr(pol, "total_layers"):
+            pol.total_layers = total_layers
+
         return PolicyCache(
             max_size=self.max_cache_size,
-            policy=copy.deepcopy(self.policy),
+            policy=pol,
         )
 
     def _attention_required(self) -> bool:
@@ -124,7 +130,8 @@ class CacheManager:
         only_last: bool = False,
     ) -> None:
         if not self._caches:
-            self._caches = [self._new_layer_cache() for _ in past_key_values]
+            total_l = len(past_key_values)
+            self._caches = [self._new_layer_cache(idx, total_l) for idx in range(total_l)]
 
         if len(self._caches) != len(past_key_values):
             raise RuntimeError(

@@ -42,6 +42,8 @@ def get_policy(name: str, cache_budget: int):
         return None
     elif name == "aege":
         return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=0.3)
+    elif name == "aege_adaptive":
+        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=0.3, adaptive_budget=True, entropy_threshold=0.4)
     elif name == "h2o":
         return H2OPolicy(heavy_ratio=0.1, sink_size=4, window_size=min(64, cache_budget // 2))
     elif name == "streaming":
@@ -118,7 +120,7 @@ def run_aes_benchmark():
     samples = loader.get_samples(num_samples=args.num_samples, seed=args.seed)
     print(f"✓ Loaded {len(samples)} long-context samples from ASAP 2.0 dataset.")
 
-    policies_to_test = ["full", "aege", "h2o", "streaming", "lru"]
+    policies_to_test = ["full", "aege", "aege_adaptive", "h2o", "streaming", "lru"]
     benchmark_records: List[Dict[str, Any]] = []
 
     for s_idx, sample in enumerate(samples, 1):
