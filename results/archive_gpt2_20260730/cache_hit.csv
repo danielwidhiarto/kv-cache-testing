@@ -1,0 +1,4 @@
+cache_type,num_prompts,total_positions,estimated_hits,hit_rate
+full,5,50,24,0.48
+lru,5,50,24,0.48
+h2o,5,50,24,0.48

@@ -1,0 +1,13 @@
+policy,keep_size,seq_len,compression_ratio,match,prediction,cosine_sim
+lru,32,201,0.159,True, ,0.9995
+lru,64,201,0.318,False,.,0.9976
+lru,128,201,0.637,True, ,0.9989
+h2o_0.1,32,201,0.159,False, dog,0.9962
+h2o_0.1,64,201,0.318,False, jumps,0.9938
+h2o_0.1,128,201,0.637,False, fox,0.9962
+streaming,32,201,0.159,True, ,0.9998
+streaming,64,201,0.318,True, ,0.9998
+streaming,128,201,0.637,True, ,1.0000
+snap,32,201,0.159,True, ,0.9986
+snap,64,201,0.318,True, ,0.9988
+snap,128,201,0.637,True, ,0.9987

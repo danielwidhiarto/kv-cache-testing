@@ -1,0 +1,21 @@
+prompt,policy,keep_size,seq_len,ratio,match,ref,pred,cosine
+"In this essay, I will discuss the import...",lru,16,20,0.8,False, modern, our,0.9999949932098389
+"In this essay, I will discuss the import...",h2o_0.1,16,20,0.8,False, modern, a,0.9996656179428101
+"In this essay, I will discuss the import...",streaming,16,20,0.8,True, modern, modern,1.0000005960464478
+"In this essay, I will discuss the import...",snap,16,20,0.8,False, modern, a,0.9996656179428101
+The quick brown fox jumps over the lazy ...,lru,16,201,0.07960199004975124,False, , the,-0.9082117080688477
+The quick brown fox jumps over the lazy ...,lru,32,201,0.15920398009950248,False, , fox,0.9966731071472168
+The quick brown fox jumps over the lazy ...,lru,64,201,0.31840796019900497,False, ,.,0.997614860534668
+The quick brown fox jumps over the lazy ...,lru,128,201,0.6368159203980099,True, , ,0.9988948702812195
+The quick brown fox jumps over the lazy ...,h2o_0.1,16,201,0.07960199004975124,False, , dog,0.9946184158325195
+The quick brown fox jumps over the lazy ...,h2o_0.1,32,201,0.15920398009950248,False, , dog,0.9962406158447266
+The quick brown fox jumps over the lazy ...,h2o_0.1,64,201,0.31840796019900497,False, , jumps,0.9938271045684814
+The quick brown fox jumps over the lazy ...,h2o_0.1,128,201,0.6368159203980099,False, , fox,0.9962118864059448
+The quick brown fox jumps over the lazy ...,streaming,16,201,0.07960199004975124,True, , ,0.9998395442962646
+The quick brown fox jumps over the lazy ...,streaming,32,201,0.15920398009950248,True, , ,0.9998395442962646
+The quick brown fox jumps over the lazy ...,streaming,64,201,0.31840796019900497,True, , ,0.9998395442962646
+The quick brown fox jumps over the lazy ...,streaming,128,201,0.6368159203980099,True, , ,0.9999735355377197
+The quick brown fox jumps over the lazy ...,snap,16,201,0.07960199004975124,True, , ,0.9986056089401245
+The quick brown fox jumps over the lazy ...,snap,32,201,0.15920398009950248,True, , ,0.9986286759376526
+The quick brown fox jumps over the lazy ...,snap,64,201,0.31840796019900497,True, , ,0.9987566471099854
+The quick brown fox jumps over the lazy ...,snap,128,201,0.6368159203980099,True, , ,0.9987413287162781

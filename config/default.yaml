@@ -1,0 +1,68 @@
+# KV Cache Testing Framework — Default Configuration
+
+model:
+  name: "gpt2"  # Small model for testing; use "meta-llama/Llama-3.2-1B" for real experiments
+  dtype: "float16"  # "float16" for GPU, "float32" for CPU
+  device: null  # null = auto-detect
+
+cache:
+  max_sizes: [512, 1024, 2048, 4096]  # Cache sizes to test
+  default_max_size: 2048
+
+policies:
+  # Which policies to test
+  - name: "full"
+    enabled: true
+    params: {}
+  - name: "lru"
+    enabled: true
+    params: {}
+  - name: "h2o"
+    enabled: true
+    params:
+      heavy_ratio: 0.1
+  - name: "streaming"
+    enabled: true
+    params:
+      sink_size: 4
+      window_size: 512
+  - name: "snap"
+    enabled: true
+    params:
+      observation_size: 32
+      retain_ratio: 0.5
+  - name: "aege"
+    enabled: true
+    params:
+      sink_size: 4
+      window_size: 64
+      entropy_weight: 0.3
+      temporal_decay: 0.95
+
+benchmark:
+  # Sequence lengths to test
+  input_lengths: [128, 256, 512, 1024]
+  # Number of tokens to generate per test
+  max_new_tokens: 50
+  # Number of warmup iterations
+  warmup_steps: 2
+  # Number of measured iterations
+  measure_steps: 5
+  # Batch size
+  batch_size: 1
+
+correctness:
+  # Tolerance for logit comparison
+  atol: 1e-3
+  rtol: 1e-3
+  # Test prompts
+  prompts:
+    - "The quick brown fox jumps over the lazy dog."
+    - "Machine learning is a subset of artificial intelligence that focuses on"
+    - "In this essay, I will discuss the importance of education in modern society."
+
+output:
+  # Where to save results
+  dir: "results"
+  csv: true
+  json: true

@@ -1,0 +1,5 @@
+policy,model,max_cache_size,input_length,avg_latency_ms,total_latency_ms,peak_memory_mb,total_evictions,tokens_per_second,num_steps
+standard_forward,gpt2,128,128,33.66,67.32,0.0,0,29.71,2
+standard_forward,gpt2,256,256,50.84,101.67,0.0,0,19.67,2
+standard_forward,gpt2,512,512,126.48,252.97,0.0,0,7.91,2
+standard_forward,gpt2,1024,1024,295.08,590.15,0.0,0,3.39,2

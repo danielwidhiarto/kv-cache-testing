@@ -1,0 +1,4 @@
+policy,model,max_cache_size,input_length,avg_latency_ms,total_latency_ms,peak_memory_mb,total_evictions,tokens_per_second,num_steps
+batch_1,gpt2,178,128,1972.0,3944.01,0.0,0,25.35,2
+batch_2,gpt2,178,128,1880.58,3761.15,0.0,0,53.18,2
+batch_4,gpt2,178,128,2241.34,4482.68,0.0,0,89.23,2
