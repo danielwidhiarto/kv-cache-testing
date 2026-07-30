@@ -85,7 +85,7 @@ def update_dashboard():
                 else:
                     badge = f'<span class="badge badge-pink">{ratio:.2f}x slower</span>'
 
-            row_html = f'<tr{row_cls}><td><strong>"{topic}"</strong></td><td>{p_tok}</td><td>{c_bud}</td><td>{ev_pct}%</td><td>{pol_str}</td><td>{lat:.2f}s</td><td>{ttft:.3f}s</td><td>{itl:.1f}ms</td><td>{tput:.1f} tok/s</td><td>{badge}</td></tr>'
+            row_html = f'<tr{row_cls}><td><strong>"{topic}"</strong></td><td>{p_tok}</td><td>{c_bud}</td><td>{ev_pct}%</td><td>{pol_str}</td><td>{r["peak_cache_tokens"]:,}</td><td>{lat:.2f}s</td><td>{ttft:.3f}s</td><td>{itl:.1f}ms</td><td>{tput:.1f} tok/s</td><td>{badge}</td></tr>'
             table_rows.append(row_html)
 
     table_body_html = "\n".join(table_rows)
@@ -403,6 +403,7 @@ def update_dashboard():
             <th>Cache Budget</th>
             <th>Eviction %</th>
             <th>Policy</th>
+            <th>Peak KV Tokens</th>
             <th>Total Latency</th>
             <th>TTFT (Prefill)</th>
             <th>ITL (Decode)</th>
