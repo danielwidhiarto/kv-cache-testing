@@ -94,6 +94,7 @@ class AEGEPolicy(EvictionPolicy):
         if self._cumulative_attn is None:
             self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
             self._entropy_history = torch.zeros(seq_len, dtype=torch.float32, device=device)
+            self._has_entropy = False
         elif self._cumulative_attn.shape[0] < seq_len:
             padding = torch.zeros(
                 seq_len - self._cumulative_attn.shape[0],
@@ -110,6 +111,7 @@ class AEGEPolicy(EvictionPolicy):
         elif self._cumulative_attn.shape[0] > seq_len:
             self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
             self._entropy_history = torch.zeros(seq_len, dtype=torch.float32, device=device)
+            self._has_entropy = False
 
         if attention_scores is not None:
             # Accumulate attention with temporal decay
@@ -117,31 +119,33 @@ class AEGEPolicy(EvictionPolicy):
             attn_sum = attention_scores.float().sum(dim=(0, 1, 2))  # [seq_len]
             self._cumulative_attn += attn_sum
 
-            # Fast optimization: Compute entropy primarily during prefill (query_len > 1)
-            # or pad with existing history during 1-step decode to eliminate latency overhead
+            # Compute entropy during prefill (query_len > 1) or first call without GPU-CPU sync
             query_len = attention_scores.shape[2]
-            if query_len > 1 or self._entropy_history.sum() == 0:
+            if query_len > 1 or not self._has_entropy:
                 entropy = self._compute_entropy(attention_scores)
                 self._entropy_history[:entropy.shape[0]] = entropy
+                self._has_entropy = True
             else:
                 self._entropy_history *= self.temporal_decay
 
-        # Normalize scores for middle positions only
+        # Normalize scores for middle positions purely on GPU (no Python syncs)
         middle_start = protected_end
         middle_end = window_start
 
-        middle_attn = self._cumulative_attn[middle_start:middle_end].clone()
-        middle_entropy = self._entropy_history[middle_start:middle_end].clone()
+        middle_attn = self._cumulative_attn[middle_start:middle_end]
+        middle_entropy = self._entropy_history[middle_start:middle_end]
 
-        # Normalize both to [0, 1]
-        if middle_attn.max() > middle_attn.min():
-            middle_attn = (middle_attn - middle_attn.min()) / (middle_attn.max() - middle_attn.min() + 1e-10)
-        if middle_entropy.max() > middle_entropy.min():
-            middle_entropy = (middle_entropy - middle_entropy.min()) / (middle_entropy.max() - middle_entropy.min() + 1e-10)
+        attn_min, attn_max = middle_attn.min(), middle_attn.max()
+        attn_denom = (attn_max - attn_min).clamp_min(1e-10)
+        norm_attn = (middle_attn - attn_min) / attn_denom
+
+        ent_min, ent_max = middle_entropy.min(), middle_entropy.max()
+        ent_denom = (ent_max - ent_min).clamp_min(1e-10)
+        norm_entropy = (middle_entropy - ent_min) / ent_denom
 
         # Score: high attn + low entropy = keep
         # score = attn × (1 - entropy_weight × entropy)
-        scores = middle_attn * (1.0 - self.entropy_weight * middle_entropy)
+        scores = norm_attn * (1.0 - self.entropy_weight * norm_entropy)
 
         # Evict lowest scores
         _, lowest_local = torch.topk(scores, num_to_evict, largest=False)
@@ -152,6 +156,7 @@ class AEGEPolicy(EvictionPolicy):
     def reset(self):
         self._cumulative_attn = None
         self._entropy_history = None
+        self._has_entropy = False
 
     def on_evict(self, indices: torch.Tensor) -> None:
         if self._cumulative_attn is None or indices.numel() == 0:
