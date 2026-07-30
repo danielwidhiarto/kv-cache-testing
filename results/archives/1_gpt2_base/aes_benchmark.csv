@@ -1,0 +1,81 @@
+sample_idx,prompt_name,human_score,prompt_tokens,max_cache_size,removed_tokens,removed_pct,generated_tokens,policy,latency_sec,step_count,generated_output
+1,Exploring Venus,3.0,1536,512,1024,66.7,10,FullCache,7.0672,10,"dangerous.
+The most of life.
+The"
+1,Exploring Venus,3.0,1536,512,1024,66.7,10,aege,7.2241,10,"dangerous.
+The most of life.
+The"
+1,Exploring Venus,3.0,1536,512,1024,66.7,10,h2o,16.6777,10,"dangerous.
+The most of life.
+The"
+1,Exploring Venus,3.0,1536,512,1024,66.7,10,streaming,28.1798,10,"dangerous.
+The most of life.
+The"
+1,Exploring Venus,3.0,1536,512,1024,66.7,10,lru,15.1483,10,"dangerous.
+The most of life.
+The"
+2,Facial action coding system,5.0,774,512,262,33.9,10,FullCache,7.5578,10,"### RESEARCH
+
+The Fac"
+2,Facial action coding system,5.0,774,512,262,33.9,10,aege,3.6055,10,"### RESEARCH
+
+The Fac"
+2,Facial action coding system,5.0,774,512,262,33.9,10,h2o,2.7403,10,"### RESEARCH
+
+The Fac"
+2,Facial action coding system,5.0,774,512,262,33.9,10,streaming,2.5997,10,"### RESEARCH
+
+The Fac"
+2,Facial action coding system,5.0,774,512,262,33.9,10,lru,2.5136,10,"### RESEARCH
+
+The Fac"
+3,The Face on Mars,4.0,1536,512,1024,66.7,10,FullCache,18.8504,10,"be a face.
+I have a face."
+3,The Face on Mars,4.0,1536,512,1024,66.7,10,aege,21.6297,10,"be a face.
+I have a face."
+3,The Face on Mars,4.0,1536,512,1024,66.7,10,h2o,19.6879,10,"be a face.
+I have a face."
+3,The Face on Mars,4.0,1536,512,1024,66.7,10,streaming,21.5349,10,"be a face.
+I have a face."
+3,The Face on Mars,4.0,1536,512,1024,66.7,10,lru,23.8461,10,"be a face.
+I have a face."
+4,"""A Cowboy Who Rode the Waves""",3.0,1416,512,904,63.8,10,FullCache,6.0809,10,
+4,"""A Cowboy Who Rode the Waves""",3.0,1416,512,904,63.8,10,aege,4.3052,10,
+4,"""A Cowboy Who Rode the Waves""",3.0,1416,512,904,63.8,10,h2o,4.2887,10,
+4,"""A Cowboy Who Rode the Waves""",3.0,1416,512,904,63.8,10,streaming,4.323,10,
+4,"""A Cowboy Who Rode the Waves""",3.0,1416,512,904,63.8,10,lru,4.3386,10,
+5,Driverless cars,3.0,1536,512,1024,66.7,10,FullCache,35.2544,10,"are the best.
+I think of the best"
+5,Driverless cars,3.0,1536,512,1024,66.7,10,aege,17.8476,10,"are the best.
+I think of the best"
+5,Driverless cars,3.0,1536,512,1024,66.7,10,h2o,20.8528,10,"are the best.
+I think of the best"
+5,Driverless cars,3.0,1536,512,1024,66.7,10,streaming,18.0087,10,"are the best.
+I think of the best"
+5,Driverless cars,3.0,1536,512,1024,66.7,10,lru,19.2738,10,"are the best.
+I think of the best"
+6,Does the electoral college work?,2.0,1536,512,1024,66.7,10,FullCache,19.3972,10,.
+6,Does the electoral college work?,2.0,1536,512,1024,66.7,10,aege,16.8681,10,.
+6,Does the electoral college work?,2.0,1536,512,1024,66.7,10,h2o,15.9422,10,.
+6,Does the electoral college work?,2.0,1536,512,1024,66.7,10,streaming,20.6371,10,.
+6,Does the electoral college work?,2.0,1536,512,1024,66.7,10,lru,21.4779,10,.
+7,Car-free cities,4.0,1536,512,1024,66.7,10,FullCache,19.8545,10,"in the same day
+The
+The
+The"
+7,Car-free cities,4.0,1536,512,1024,66.7,10,aege,18.3679,10,"in the same day
+The
+The
+The"
+7,Car-free cities,4.0,1536,512,1024,66.7,10,h2o,21.0738,10,"in the same day
+The
+The
+The"
+7,Car-free cities,4.0,1536,512,1024,66.7,10,streaming,26.9392,10,"in the same day
+The
+The
+The"
+7,Car-free cities,4.0,1536,512,1024,66.7,10,lru,23.4953,10,"in the same day
+The
+The
+The"

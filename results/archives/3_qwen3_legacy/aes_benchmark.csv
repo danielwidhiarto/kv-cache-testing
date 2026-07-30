@@ -1,0 +1,1079 @@
+sample_idx,prompt_name,human_score,prompt_tokens,max_cache_size,removed_tokens,removed_pct,generated_tokens,actual_generated_tokens,policy,model,dtype,device,seed,latency_sec,ttft_sec,itl_ms,throughput_tok_sec,step_count,actual_evicted_tokens,peak_cache_tokens,final_cache_tokens_per_layer,predicted_score,generated_output,generated_output_preview
+1,Exploring Venus,3.0,1664,512,1152,69.2,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.8065,0.1023,16.49,61.62,64,43740,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to evaluate a student's essay based on the provided source text and grading rubric. The student's essay is about whether the author supports the idea of studying Venus despite the dangers","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+1,Exploring Venus,3.0,1664,512,1152,69.2,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0779,0.1011,14.78,68.73,64,43740,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Score: 3
+The student essay evaluates how well the author supports the idea that studying Venus is a worthy pursuit despite the dangers. The essay includes a claim that evaluates how well the author supports the idea that studying Venus is a worthy pursuit despite the dangers; an explanation of the evidence from the article that supports","<think>
+
+Score: 3
+The student essay evaluates how well the author supports the idea that studying Ve"
+1,Exploring Venus,3.0,1664,512,1152,69.2,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7681,0.101,14.6,69.6,64,43740,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric. The task was to write an essay evaluating how well the author supports the idea that studying Venus is a worthy pursuit despite the dangers. The student essay needs to have an introduction, body, and conclusion, with a claim, evidence from the article","<think>
+Okay, let's evaluate this student essay based on the rubric. The task was to write an essay "
+1,Exploring Venus,3.0,1664,512,1152,69.2,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.9636,0.1003,14.86,68.38,64,43740,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+
+
+
+
+
+
+</think>
+
+
+
+
+
+
+
+
+
+</think>
+
+
+
+</think>
+
+</think>
+
+</think>
+
+
+
+
+
+###'
+
+
+
+
+
+
+
+
+
+
+
+
+
+###'
+
+
+###'s
+
+###'","<think>
+
+
+
+
+
+
+
+
+
+</think>
+
+
+
+
+
+
+
+
+
+</think>
+
+
+
+</think>
+
+</think>
+
+</think>
+
+
+
+
+
+###'
+
+
+
+
+
+
+
+
+
+
+
+
+
+#"
+1,Exploring Venus,3.0,1664,512,1152,69.2,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.5109,0.0991,14.9,68.18,64,0,62172,1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727:1727,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an essay evaluating how well the author supports the idea that studying Venus is a worthy pursuit despite the dangers. The student essay needs to include a claim, explanation of evidence, and structure with intro, body, conclusion","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+2,Exploring Venus,3.0,1718,512,1206,70.2,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.9578,0.0966,14.83,68.49,64,45684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+ on
+://
+
+
+
+
+://
+ to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to","<think>
+ on
+://
+
+
+
+
+://
+ to to to to to to to to to to to to to to to to to to to to to to to to to "
+2,Exploring Venus,3.0,1718,512,1206,70.2,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4917,0.097,14.84,68.47,64,45684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score the student's essay based on the provided source reading and the grading rubric. 
+
+First, I need to understand the rubric. The student is supposed to evaluate","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+2,Exploring Venus,3.0,1718,512,1206,70.2,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0734,0.0978,14.83,68.5,64,45684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,<think>,<think>
+2,Exploring Venus,3.0,1718,512,1206,70.2,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.5067,0.0975,14.95,67.96,64,0,64116,1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781:1781,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an essay evaluating how well the author supports the idea that studying Venus is a worthy pursuit despite the dangers. The student essay needs to include a claim, explanation of evidence, and structure with intro, body, conclusion","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+2,Exploring Venus,3.0,1718,512,1206,70.2,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7581,0.0969,14.64,69.4,64,45684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric requires an introduction, body, and conclusion, and the student needs to use evidence from the article to argue whether the author did a good job explaining why Venus should be explored.
+
+First, looking at the structure. The student","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric requires an"
+3,Facial action coding system,5.0,798,512,286,35.8,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.2956,0.0363,14.64,69.41,64,0,30996,861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861:861,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task is to argue whether using the Facial Action Coding System (FACS) to read students' emotions in a classroom is valuable. 
+
+First, I need to check if the essay addresses the prompt. The student clearly argues that F","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task is to argue w"
+3,Facial action coding system,5.0,798,512,286,35.8,64,7,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,0.2553,0.0363,14.74,79.14,7,10512,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Score: 5","<think>
+Score: 5"
+3,Facial action coding system,5.0,798,512,286,35.8,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.3356,0.0372,14.81,68.59,64,12564,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric. The task is to argue whether using the Facial Action Coding System (FACS) to read students' emotions in a classroom is valuable. 
+
+First, I need to check if the essay addresses the prompt. The student does argue that FACS","<think>
+Okay, let's evaluate this student essay based on the rubric. The task is to argue whether us"
+3,Facial action coding system,5.0,798,512,286,35.8,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.6463,0.0366,14.63,69.43,64,12564,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric. First, I need to check the criteria mentioned in the evaluation instruction. The user didn't provide the rubric details, but since the example response is a score, I'll assume a standard rubric for essays, which typically includes aspects like","<think>
+Okay, let's evaluate this student essay based on the rubric. First, I need to check the crit"
+3,Facial action coding system,5.0,798,512,286,35.8,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.8219,0.0366,14.86,68.38,64,12564,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+        
+        
+        1
+
+Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score:","<think>
+
+
+        
+        
+        1
+
+Score: Score: Score: Score: Score: Score: Score: Score: Score"
+4,Facial action coding system,4.0,655,512,143,21.8,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.3278,0.0323,14.91,68.15,64,7416,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task is to argue whether using the Facial Action Coding System (FACS) to read students' emotions in a classroom is valuable. 
+
+First, I need to check if the essay addresses the prompt. The student does argue in favor","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task is to argue w"
+4,Facial action coding system,4.0,655,512,143,21.8,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.8139,0.0327,14.83,68.52,64,7416,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+###'
+
+Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score:","<think>
+
+
+
+###'
+
+Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score: Score:"
+4,Facial action coding system,4.0,655,512,143,21.8,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.9093,0.0325,14.83,68.48,64,7416,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score:","<think>
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+Score: 3
+
+S"
+4,Facial action coding system,4.0,655,512,143,21.8,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.6268,0.0323,14.63,69.42,64,7416,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric. First, I need to check the content, organization, language, and grammar. 
+
+The essay talks about the Facial Action Coding System (FACS) in a classroom setting. The main points are that it helps teachers understand student confusion or boredom","<think>
+Okay, let's evaluate this student essay based on the rubric. First, I need to check the cont"
+4,Facial action coding system,4.0,655,512,143,21.8,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.2756,0.0323,14.68,69.21,64,0,25848,718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718:718,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task is to argue whether using the Facial Action Coding System (FACS) to read students' emotions in a classroom is valuable. 
+
+First, I'll check the structure. The essay starts with an introduction about emotions and FACS","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task is to argue w"
+5,The Face on Mars,4.0,1869,512,1357,72.6,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7783,0.1121,14.69,69.15,64,51120,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't explicitly listed, but the user mentioned it's for a specific task. Since the user hasn't provided the rubric details, I'll assume a standard scoring system where 6 is the highest and 1 the","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't expli"
+5,The Face on Mars,4.0,1869,512,1357,72.6,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0858,0.1121,14.89,68.22,64,51120,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score:","<think>
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+Score: 4
+
+S"
+5,The Face on Mars,4.0,1869,512,1357,72.6,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.5128,0.1121,14.83,68.5,64,51120,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an AES evaluator and score the student's essay based on the provided rubric and source text. 
+
+First, I need to recall the grading rubric. The essay should argue that the Face on Mars is a natural landform, using claims","<think>
+Okay, let's tackle this. The user wants me to act as an AES evaluator and score the student'"
+5,The Face on Mars,4.0,1869,512,1357,72.6,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.5357,0.112,15.1,67.29,64,0,69552,1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932:1932,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argumentative essay convincing someone the Face on Mars is a natural landform, using claims and evidence from the article. 
+
+First, the introduction. The student starts with ""Aliens or a Coincidence","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+5,The Face on Mars,4.0,1869,512,1357,72.6,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.9762,0.1121,14.81,68.58,64,51120,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+
+
+</think>
+
+
+
+
+
+######'
+
+
+
+
+###'
+
+
+##################'
+
+
+###'
+
+
+###'
+
+
+#########'
+
+
+###'
+
+
+#################################'","<think>
+
+
+
+
+
+</think>
+
+
+
+
+
+######'
+
+
+
+
+###'
+
+
+##################'
+
+
+###'
+
+
+###'
+
+
+#########'
+
+
+###'
+"
+6,The Face on Mars,1.0,1722,512,1210,70.3,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7476,0.0969,14.62,69.49,64,45828,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric is about the essay's content, structure, and adherence to the topic. The user mentioned that the original task was to write an essay about the ""Face on Mars"" and the student's response needs to be assessed.","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric is about th"
+6,The Face on Mars,1.0,1722,512,1210,70.3,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.48,0.0968,14.89,68.21,64,45828,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an AES evaluator and score the student's essay based on the provided rubric. First, I need to understand the grading criteria. The rubric mentions an argumentative essay convincing someone the Face on Mars is natural, using claims and evidence from","<think>
+Okay, let's tackle this. The user wants me to act as an AES evaluator and score the student'"
+6,The Face on Mars,1.0,1722,512,1210,70.3,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.4915,0.097,14.89,68.22,64,0,64260,1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785:1785,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argumentative essay convincing someone the Face on Mars is a natural landform, using claims and evidence from the article. 
+
+First, the introduction. The student starts by asking if the Face is real and mentions","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+6,The Face on Mars,1.0,1722,512,1210,70.3,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.9437,0.0968,14.77,68.79,64,45828,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+###'
+
+
+
+
+. 
+
+###'
+
+
+
+
+
+
+###'
+
+
+###'
+
+
+###'
+
+
+
+###'
+
+
+###'
+
+ to to to to to to to to to to to","<think>
+
+
+
+###'
+
+
+
+
+. 
+
+###'
+
+
+
+
+
+
+###'
+
+
+###'
+
+
+###'
+
+
+
+###'
+
+
+###'
+
+ to to to to to to to to to to"
+6,The Face on Mars,1.0,1722,512,1210,70.3,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0498,0.0968,14.8,68.63,64,45828,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score:","<think>
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+S"
+7,"""A Cowboy Who Rode the Waves""",3.0,1425,512,913,64.1,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7225,0.0827,14.66,69.31,64,35136,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argument from Luke's point of view convincing others to join the Seagoing Cowboys program. The essay needs an introduction, body with details from the article, and a conclusion.
+
+First, looking at the structure","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+7,"""A Cowboy Who Rode the Waves""",3.0,1425,512,913,64.1,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0173,0.0827,14.84,68.46,64,35136,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score:","<think>
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+Score: 2
+
+S"
+7,"""A Cowboy Who Rode the Waves""",3.0,1425,512,913,64.1,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4401,0.0828,14.89,68.22,64,35136,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an expert Automated Essay Scoring evaluator. The task is to score a student's essay based on the provided rubric and source text. 
+
+First, I need to understand the grading assignment. The student is supposed to write an argument from Luke","<think>
+Okay, let's tackle this. The user wants me to act as an expert Automated Essay Scoring evalu"
+7,"""A Cowboy Who Rode the Waves""",3.0,1425,512,913,64.1,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.9106,0.0827,14.81,68.59,64,35136,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+</think>
+
+</think>
+
+
+</think>
+
+
+
+</think>
+
+###'
+
+
+</think>
+
+
+
+
+
+
+
+
+
+</think>
+
+</think>
+
+
+</think>
+
+</think>
+
+</think>
+
+
+
+
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+###'","<think>
+</think>
+
+</think>
+
+
+</think>
+
+
+
+</think>
+
+###'
+
+
+</think>
+
+
+
+
+
+
+
+
+
+</think>
+
+</think>
+
+
+</t"
+7,"""A Cowboy Who Rode the Waves""",3.0,1425,512,913,64.1,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.4311,0.0827,14.75,68.87,64,0,53568,1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488:1488,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argument from Luke's point of view convincing others to join the Seagoing Cowboys program. The essay needs an introduction, body with reasons and details from the article, and a conclusion.
+
+First, looking at","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+8,"""A Cowboy Who Rode the Waves""",1.0,1357,512,845,62.3,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0016,0.0743,14.83,68.51,64,32688,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate the student essay based on the rubric provided. The task is to write an argument from Luke's point of view convincing others to participate in the Seagoing Cowboys program. The essay must include reasons to join the program, details from the article to support Luke's claims, an introduction","<think>
+Okay, let's evaluate the student essay based on the rubric provided. The task is to write an"
+8,"""A Cowboy Who Rode the Waves""",1.0,1357,512,845,62.3,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.4103,0.0742,14.79,68.69,64,0,51120,1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420:1420,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argument from Luke's point of view convincing others to join the Seagoing Cowboys program. The essay needs an introduction, body, and conclusion with reasons to join and details from the article.
+
+First, looking","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+8,"""A Cowboy Who Rode the Waves""",1.0,1357,512,845,62.3,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4198,0.0743,14.89,68.23,64,32688,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argument from Luke's point of view convincing others to join the Seagoing Cowboys program. The rubric mentions including reasons to join, details from the text, and an introduction.
+
+First, the introduction.","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+8,"""A Cowboy Who Rode the Waves""",1.0,1357,512,845,62.3,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.8937,0.0743,14.81,68.61,64,32688,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+</think>
+
+
+
+
+
+
+
+. 
+
+###'
+
+. 
+
+###'
+
+
+
+
+
+
+
+
+
+</think>
+
+</think>
+
+: 
+
+###'
+.","<think>
+
+
+
+</think>
+
+
+
+
+
+
+
+. 
+
+###'
+
+. 
+
+###'
+
+
+
+
+
+
+
+
+
+</think>
+
+</think>
+
+: 
+
+###'
+."
+8,"""A Cowboy Who Rode the Waves""",1.0,1357,512,845,62.3,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7053,0.0743,14.62,69.47,64,32688,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an argument from Luke's point of view convincing others to join the Seagoing Cowboys program. The essay needs an introduction, body, and conclusion with reasons to join and details from the article.
+
+First, looking","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+9,Driverless cars,3.0,1895,512,1383,73.0,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.7792,0.1136,14.67,69.23,64,52056,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric. The task was to create an argument for or against driverless cars using details from the article. The student's essay argues in favor, but I need to check if they included the required elements: position, supporting details, intro, body,","<think>
+Okay, let's evaluate this student essay based on the rubric. The task was to create an argum"
+9,Driverless cars,3.0,1895,512,1383,73.0,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.981,0.1136,14.82,68.53,64,52056,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+### 
+###### 
+### 
+###","<think>
+
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+</think>
+
+### 
+### 
+"
+9,Driverless cars,3.0,1895,512,1383,73.0,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.5396,0.1136,15.12,67.18,64,0,70488,1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958:1958,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to create an argument for or against driverless cars using details from the article. The student's essay argues in favor of driverless cars, which is acceptable.
+
+First, looking at the structure: the essay has an introduction","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to create"
+9,Driverless cars,3.0,1895,512,1383,73.0,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0931,0.1136,14.89,68.21,64,52056,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Score: 2
+The student essay is argumentative, but it lacks structure, details, and appropriate support from the article. The essay is argumentative, but it lacks structure, details, and appropriate support from the article. The essay is argumentative, but it lacks structure, details, and appropriate support","<think>
+
+Score: 2
+The student essay is argumentative, but it lacks structure, details, and appropria"
+9,Driverless cars,3.0,1895,512,1383,73.0,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.5199,0.1136,14.82,68.56,64,52056,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score the student's essay based on the provided source reading and the grading rubric. 
+
+First, I need to understand the grading assignment. The student is supposed to create","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+10,Driverless cars,5.0,2259,512,1747,77.3,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.8447,0.1494,14.65,69.36,64,65160,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't explicitly listed, but the user mentioned it's for a writing assignment, so I'll assume standard criteria like content, organization, grammar, and adherence to the topic.
+
+First, the essay's main topic is driver","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't expli"
+10,Driverless cars,5.0,2259,512,1747,77.3,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.6108,0.1493,14.85,68.4,64,65160,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score the student's essay based on the provided source reading and the grading rubric. 
+
+First, I need to understand the rubric. The grading rubric mentions that","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+10,Driverless cars,5.0,2259,512,1747,77.3,64,64,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1673,0.1493,14.85,68.41,64,65160,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+Okay, the student essay is evaluated based on the rubric. The score must be between 1 and 6. The response must start with 'Score:'. The assistant must respond with the score. The assistant must respond with the score. The assistant must respond with the score. The assistant must respond with","<think>
+
+Okay, the student essay is evaluated based on the rubric. The score must be between 1 and 6"
+10,Driverless cars,5.0,2259,512,1747,77.3,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,1.6407,0.1492,15.25,66.62,64,0,83592,2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322:2322,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to create an argument for or against driverless cars using details from the source article. The rubric requires an introduction, body, and conclusion, along with supporting details.
+
+First, looking at the structure: the student starts","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to create"
+10,Driverless cars,5.0,2259,512,1747,77.3,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0571,0.1493,14.82,68.55,64,65160,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+###'
+
+###'
+
+
+
+
+
+
+
+### 
+### 
+###'
+
+
+###'
+'
+'
+
+
+###'
+
+
+###'
+
+
+############. 
+
+###. 
+
+###'s. 
+
+###############. 
+
+###. 
+
+###","<think>
+
+
+###'
+
+###'
+
+
+
+
+
+
+
+### 
+### 
+###'
+
+
+###'
+'
+'
+
+
+###'
+
+
+###'
+
+
+############. 
+
+###. 
+
+###'s. "
+11,Does the electoral college work?,2.0,3783,512,3271,86.5,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1061,0.331,15.84,64.13,64,0,138456,3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846:3846,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write a letter to a state senator arguing for keeping the Electoral College or switching to a popular vote, using evidence from the given texts. 
+
+First, I need to check if the essay includes a clear claim. The","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+11,Does the electoral college work?,2.0,3783,512,3271,86.5,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4685,0.3309,14.85,68.42,64,120024,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################################################################################################################################","<think>
+
+
+
+
+
+
+
+
+
+
+
+
+
+###############################################################################"
+11,Does the electoral college work?,2.0,3783,512,3271,86.5,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1793,0.3308,14.73,68.96,64,120024,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric mentions several criteria: clear thesis, organization, use of evidence, grammar, and overall effectiveness. 
+
+First, looking at the thesis. The essay doesn't have a clear thesis statement. The student talks about both pros and","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric mentions se"
+11,Does the electoral college work?,2.0,3783,512,3271,86.5,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,3.1036,0.3308,14.87,68.32,64,120024,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score a student's letter to a state senator arguing for or against the Electoral College. The student's essay is provided, and I need to use the given rubric to","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+11,Does the electoral college work?,2.0,3783,512,3271,86.5,64,4,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,0.8231,0.3309,14.95,89.18,4,117864,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+</think>","<think>
+
+</think>"
+12,Does the electoral college work?,1.0,3718,512,3206,86.2,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.0506,0.304,15.77,64.4,64,0,136116,3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781:3781,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write a letter to a state senator arguing for keeping the Electoral College or changing to a popular vote system, using information from the given texts. The rubric emphasizes including a claim, addressing counterclaims, using evidence from","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+12,Does the electoral college work?,1.0,3718,512,3206,86.2,64,4,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,0.767,0.3039,15.01,88.82,4,115524,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+</think>","<think>
+
+</think>"
+12,Does the electoral college work?,1.0,3718,512,3206,86.2,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4115,0.3038,14.84,68.46,64,117684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,<think>,<think>
+12,Does the electoral college work?,1.0,3718,512,3206,86.2,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1342,0.3039,14.76,68.85,64,117684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric mentions several key points: using evidence from the text, analyzing the author's purpose, and evaluating the argument's effectiveness. 
+
+First, I need to check if the student uses evidence from the text. The essay seems to","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric mentions se"
+12,Does the electoral college work?,1.0,3718,512,3206,86.2,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,3.0452,0.3038,14.85,68.41,64,117684,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score a student's letter to a senator arguing for or against the Electoral College. The student's essay is provided, and I need to use the given rubric to determine","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+13,Car-free cities,4.0,3970,512,3458,87.1,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4873,0.337,14.86,68.34,64,126756,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################","<think>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################"
+13,Car-free cities,4.0,3970,512,3458,87.1,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1901,0.3367,14.7,69.12,64,126756,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't explicitly listed, but from the context, it's likely assessing content, organization, grammar, and use of evidence. 
+
+First, the essay's main topic is about the benefits of limiting car usage. The student","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't expli"
+13,Car-free cities,4.0,3970,512,3458,87.1,64,4,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,0.842,0.3367,14.93,89.34,4,124596,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+</think>","<think>
+
+</think>"
+13,Car-free cities,4.0,3970,512,3458,87.1,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,3.1402,0.3368,14.84,68.45,64,126756,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score an essay based on the provided sources and a rubric. 
+
+First, I need to understand the essay's content. The student wrote an explanatory essay about the advantages","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+13,Car-free cities,4.0,3970,512,3458,87.1,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1418,0.3367,15.94,63.72,64,0,145188,4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033:4033,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an explanatory essay about the advantages of limiting car usage, using evidence from the given passages. 
+
+First, I need to check if the essay uses evidence from multiple sources. The student mentions Paris, Bogota,","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+14,Car-free cities,4.0,3964,512,3452,87.1,64,64,streaming,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1824,0.3317,14.66,69.28,64,126540,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't explicitly listed, but typically for such evaluations, the criteria might include things like content accuracy, organization, grammar, and use of evidence. Let me go through the essay step by step.
+
+First, the essay seems","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The rubric isn't expli"
+14,Car-free cities,4.0,3964,512,3452,87.1,64,64,h2o,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.4787,0.3316,14.89,68.23,64,126540,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,<think>,<think>
+14,Car-free cities,4.0,3964,512,3452,87.1,64,64,aege,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,3.1253,0.3316,14.84,68.47,64,126540,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evaluator. The task is to score an essay based on the provided source texts and a grading rubric. 
+
+First, I need to understand the essay's content. The student's essay is about the","<think>
+Okay, let's tackle this. The user wants me to act as an Automated Essay Scoring (AES) evalua"
+14,Car-free cities,4.0,3964,512,3452,87.1,64,64,FullCache,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,2.1283,0.3316,15.86,64.05,64,0,144972,4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027:4027,,"<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write an explanatory essay about the advantages of limiting car usage, using evidence from multiple sources. 
+
+First, I'll check if the essay meets the requirements. The student starts with a catchy opener, but the first sentence","<think>
+Okay, let's evaluate this student essay based on the rubric provided. The task was to write "
+14,Car-free cities,4.0,3964,512,3452,87.1,64,4,lru,Qwen/Qwen3-8B,torch.bfloat16,cuda,42,0.8327,0.3316,15.07,88.46,4,124380,18432,512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512:512,,"<think>
+
+</think>","<think>
+
+</think>"
