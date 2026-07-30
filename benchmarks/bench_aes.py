@@ -41,9 +41,9 @@ def get_policy(name: str, cache_budget: int):
     if name == "full":
         return None
     elif name == "aege":
-        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=0.3)
+        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=1.0)
     elif name == "aege_adaptive":
-        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=0.3, adaptive_budget=True, entropy_threshold=0.4)
+        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=1.0, adaptive_budget=True, entropy_threshold=0.5)
     elif name == "h2o":
         return H2OPolicy(heavy_ratio=0.1, sink_size=4, window_size=min(64, cache_budget // 2))
     elif name == "streaming":
