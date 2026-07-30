@@ -38,7 +38,16 @@ class H2OPolicy(EvictionPolicy):
         seq_len = key_cache.shape[2]
 
         # Initialize cumulative attention
-        if self._cumulative_attn is None or self._cumulative_attn.shape[0] != seq_len:
+        if self._cumulative_attn is None:
+            self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=key_cache.device)
+        elif self._cumulative_attn.shape[0] < seq_len:
+            padding = torch.zeros(
+                seq_len - self._cumulative_attn.shape[0],
+                dtype=self._cumulative_attn.dtype,
+                device=key_cache.device,
+            )
+            self._cumulative_attn = torch.cat([self._cumulative_attn, padding])
+        elif self._cumulative_attn.shape[0] > seq_len:
             self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=key_cache.device)
 
         # Accumulate attention scores
@@ -64,6 +73,16 @@ class H2OPolicy(EvictionPolicy):
 
     def reset(self):
         self._cumulative_attn = None
+
+    def on_evict(self, indices: torch.Tensor) -> None:
+        if self._cumulative_attn is not None and indices.numel() > 0:
+            keep = torch.ones(
+                self._cumulative_attn.shape[0],
+                dtype=torch.bool,
+                device=self._cumulative_attn.device,
+            )
+            keep[indices.to(device=keep.device, dtype=torch.long)] = False
+            self._cumulative_attn = self._cumulative_attn[keep]
 
     @property
     def name(self) -> str:

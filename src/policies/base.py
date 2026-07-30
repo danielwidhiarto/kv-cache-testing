@@ -44,3 +44,12 @@ class EvictionPolicy(ABC):
     def requires_attention_scores(self) -> bool:
         """Whether this policy needs attention scores to make decisions."""
         return False
+
+    def on_evict(self, indices: torch.Tensor) -> None:
+        """Notify the policy that cache positions were removed.
+
+        Stateful policies override this hook so their per-token statistics stay
+        aligned with the surviving KV positions. Stateless policies can ignore
+        it.
+        """
+        return None

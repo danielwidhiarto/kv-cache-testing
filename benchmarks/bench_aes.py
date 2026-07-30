@@ -4,6 +4,8 @@ import os
 import sys
 import time
 import argparse
+import random
+import re
 import pandas as pd
 import torch
 from typing import List, Dict, Any
@@ -31,6 +33,8 @@ def parse_args():
     parser.add_argument("--max-new-tokens", type=int, default=64, help="Max new tokens to generate per sample")
     parser.add_argument("--dataset-path", type=str, default="dataset/ASAP2_train_sourcetexts.csv", help="Path to ASAP 2.0 CSV")
     parser.add_argument("--output-dir", type=str, default="results", help="Directory to save CSV benchmark output")
+    parser.add_argument("--seed", type=int, default=42, help="Sampling and policy-order seed")
+    parser.add_argument("--warmup-runs", type=int, default=1, help="Unmeasured warm-up runs per sample")
     return parser.parse_args()
 
 
@@ -49,15 +53,30 @@ def get_policy(name: str, cache_budget: int):
         raise ValueError(f"Unknown policy: {name}")
 
 
+def extract_score(text: str):
+    """Extract the first explicit Score: 1-6 value from model output."""
+    match = re.search(r"^\s*score\s*:\s*([1-6])\b", str(text), re.IGNORECASE)
+    return int(match.group(1)) if match else None
+
+
 def run_aes_benchmark():
     args = parse_args()
     os.makedirs(args.output_dir, exist_ok=True)
+    random.seed(args.seed)
+    torch.manual_seed(args.seed)
 
     device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+    if device == "cuda":
+        dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    elif device == "mps":
+        dtype = torch.float16
+    else:
+        dtype = torch.float32
     print(f"==================================================")
     print(f"🚀 Running AES KV Cache Benchmark")
     print(f"• Model: {args.model}")
     print(f"• Device: {device}")
+    print(f"• Dtype: {dtype}")
     print(f"• Max Cache Budget: {args.max_cache_size} tokens")
     print(f"• Samples Count: {args.num_samples}")
     print(f"==================================================")
@@ -67,7 +86,12 @@ def run_aes_benchmark():
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    model = AutoModelForCausalLM.from_pretrained(args.model, attn_implementation="eager").to(device)
+    model = AutoModelForCausalLM.from_pretrained(
+        args.model,
+        torch_dtype=dtype,
+        attn_implementation="eager",
+        low_cpu_mem_usage=True,
+    ).to(device)
 
     # Detect if this is an instruct/chat model
     is_instruct = any(kw in args.model.lower() for kw in ["instruct", "chat", "it", "-it"])
@@ -75,7 +99,7 @@ def run_aes_benchmark():
 
     # Load Dataset Samples
     loader = AESDatasetLoader(csv_path=args.dataset_path)
-    samples = loader.get_samples(num_samples=args.num_samples)
+    samples = loader.get_samples(num_samples=args.num_samples, seed=args.seed)
     print(f"✓ Loaded {len(samples)} long-context samples from ASAP 2.0 dataset.")
 
     policies_to_test = ["full", "aege", "h2o", "streaming", "lru"]
@@ -106,7 +130,22 @@ def run_aes_benchmark():
         print(f"\n--- Sample [{s_idx}/{len(samples)}] (Prompt Topic: '{prompt_name}', Len: {seq_len} tokens, Removed: {removed_tokens} ({removed_pct:.1f}%)) ---", flush=True)
 
 
-        for policy_name in policies_to_test:
+        # Warm up the exact generation path before measuring latency.
+        for _ in range(args.warmup_runs):
+            warmup_manager = CacheManager(
+                model=model,
+                policy=None,
+                max_cache_size=args.max_cache_size,
+                device=torch.device(device),
+            )
+            with torch.no_grad():
+                warmup_manager.generate_with_cache(input_ids=input_ids, max_new_tokens=1)
+            warmup_manager.cleanup()
+
+        policy_order = policies_to_test.copy()
+        random.Random(args.seed + s_idx).shuffle(policy_order)
+
+        for policy_name in policy_order:
             policy = get_policy(policy_name, cache_budget=args.max_cache_size)
             manager = CacheManager(model=model, policy=policy, max_cache_size=args.max_cache_size, device=torch.device(device))
 
@@ -122,11 +161,15 @@ def run_aes_benchmark():
             metrics = manager.get_metrics()
             manager.cleanup()
 
-            # Time-to-First-Token (TTFT) and Inter-Token Latency (ITL)
-            ttft_sec = round(elapsed_time * 0.75, 4)  # Prefill phase accounts for ~75% of long context forward pass
-            decode_time = elapsed_time - ttft_sec
-            itl_ms = round((decode_time / max(1, args.max_new_tokens)) * 1000, 2)
-            throughput_tok_sec = round((seq_len + args.max_new_tokens) / elapsed_time, 2) if elapsed_time > 0 else 0.0
+            actual_generated_tokens = max(0, output_ids.shape[1] - seq_len)
+            decode_time = metrics.get("decode_latency_sec", 0.0)
+            ttft_sec = round(metrics.get("prefill_latency_sec", 0.0), 4)
+            itl_ms = round((decode_time / max(1, metrics.get("decode_model_calls", 0))) * 1000, 2)
+            throughput_tok_sec = round(
+                actual_generated_tokens / decode_time, 2
+            ) if decode_time > 0 else 0.0
+            actual_evicted_tokens = int(metrics.get("total_evictions", 0))
+            predicted_score = extract_score(generated_text)
 
             record = {
                 "sample_idx": s_idx,
@@ -137,13 +180,25 @@ def run_aes_benchmark():
                 "removed_tokens": removed_tokens,
                 "removed_pct": round(removed_pct, 1),
                 "generated_tokens": args.max_new_tokens,
+                "actual_generated_tokens": actual_generated_tokens,
                 "policy": policy_name if policy else "FullCache",
+                "model": args.model,
+                "dtype": str(dtype),
+                "device": device,
+                "seed": args.seed,
                 "latency_sec": round(elapsed_time, 4),
                 "ttft_sec": ttft_sec,
                 "itl_ms": itl_ms,
                 "throughput_tok_sec": throughput_tok_sec,
                 "step_count": metrics.get("step_count", 0),
-                "generated_output": generated_text[:100],  # snippet
+                "actual_evicted_tokens": actual_evicted_tokens,
+                "peak_cache_tokens": metrics.get("peak_cache_tokens", 0),
+                "final_cache_tokens_per_layer": ":".join(str(x) for x in metrics.get("cache_sizes", [])),
+                "predicted_score": predicted_score,
+                # Keep the full output for exact-match measurement. The preview
+                # is only for readable logs/tables.
+                "generated_output": generated_text,
+                "generated_output_preview": generated_text[:100],
             }
 
             benchmark_records.append(record)
@@ -182,10 +237,9 @@ def run_aes_benchmark():
         pol_label = p_name if p_name != "full" else "FullCache"
         sub_df = df_results[df_results["policy"] == pol_label]
         if not sub_df.empty:
-            # Check for score digits in outputs
+            # Use the explicitly parsed score, never an arbitrary digit from prose.
             y_true = sub_df["human_score"].values
-            y_pred = []
-            has_explicit_digits = False
+            y_pred = sub_df["predicted_score"].dropna().astype(int).tolist()
             
             # Compare output text match with FullCache baseline
             exact_matches = 0
@@ -197,21 +251,9 @@ def run_aes_benchmark():
                     if r["generated_output"] == base_out:
                         exact_matches += 1
                 
-                # Robust extraction of score digit (1-6)
-                import re
-                score_match = re.search(r'(?:score|rating|grade)?\s*[:=]?\s*([1-6])', str(r["generated_output"]), re.IGNORECASE)
-                if score_match:
-                    has_explicit_digits = True
-                    y_pred.append(int(score_match.group(1)))
-                else:
-                    digits = [int(c) for c in str(r["generated_output"]) if c.isdigit() and 1 <= int(c) <= 6]
-                    if digits:
-                        has_explicit_digits = True
-                        y_pred.append(digits[0])
-            
             match_pct = (exact_matches / len(sub_df) * 100) if len(sub_df) > 0 else 0.0
             
-            if has_explicit_digits and len(y_pred) == len(y_true):
+            if len(y_pred) == len(y_true):
                 from src.metrics.quality_metrics import quadratic_weighted_kappa
                 qwk_score = quadratic_weighted_kappa(y_true, y_pred)
                 qwk_str = f"{qwk_score:.4f}"

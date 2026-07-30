@@ -91,7 +91,23 @@ class AEGEPolicy(EvictionPolicy):
             return torch.tensor([], dtype=torch.long, device=device)
 
         # Initialize state
-        if self._cumulative_attn is None or self._cumulative_attn.shape[0] != seq_len:
+        if self._cumulative_attn is None:
+            self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
+            self._entropy_history = torch.zeros(seq_len, dtype=torch.float32, device=device)
+        elif self._cumulative_attn.shape[0] < seq_len:
+            padding = torch.zeros(
+                seq_len - self._cumulative_attn.shape[0],
+                dtype=self._cumulative_attn.dtype,
+                device=device,
+            )
+            self._cumulative_attn = torch.cat([self._cumulative_attn, padding])
+            entropy_padding = torch.zeros(
+                seq_len - self._entropy_history.shape[0],
+                dtype=self._entropy_history.dtype,
+                device=device,
+            )
+            self._entropy_history = torch.cat([self._entropy_history, entropy_padding])
+        elif self._cumulative_attn.shape[0] > seq_len:
             self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
             self._entropy_history = torch.zeros(seq_len, dtype=torch.float32, device=device)
 
@@ -136,6 +152,18 @@ class AEGEPolicy(EvictionPolicy):
     def reset(self):
         self._cumulative_attn = None
         self._entropy_history = None
+
+    def on_evict(self, indices: torch.Tensor) -> None:
+        if self._cumulative_attn is None or indices.numel() == 0:
+            return
+        keep = torch.ones(
+            self._cumulative_attn.shape[0],
+            dtype=torch.bool,
+            device=self._cumulative_attn.device,
+        )
+        keep[indices.to(device=keep.device, dtype=torch.long)] = False
+        self._cumulative_attn = self._cumulative_attn[keep]
+        self._entropy_history = self._entropy_history[keep]
 
     @property
     def name(self) -> str:

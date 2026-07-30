@@ -45,6 +45,7 @@ class LRUCache(KVCache):
         mask[indices] = False
         self._keys = self._keys[:, :, mask, :]
         self._values = self._values[:, :, mask, :]
+        self._policy.on_evict(indices)
 
     def get(self) -> Tuple[torch.Tensor, torch.Tensor]:
         if self._keys is None:

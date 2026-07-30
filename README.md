@@ -35,6 +35,28 @@ python benchmarks/bench_cache_hit.py --model gpt2
 pytest tests/ -v
 ```
 
+### Run the AES eviction benchmark (Colab GPU)
+
+The AES runner now performs one prefill, keeps the model's real
+`past_key_values`, and applies the selected policy independently per layer.
+Run the benchmark after installing the requirements and extracting the ASAP 2.0
+CSV:
+
+```bash
+python benchmarks/bench_aes.py \
+  --model Qwen/Qwen2.5-7B-Instruct \
+  --num-samples 100 \
+  --max-cache-size 512 \
+  --max-new-tokens 20 \
+  --seed 42 \
+  --output-dir results
+```
+
+The resulting `results/aes_benchmark.csv` includes `actual_evicted_tokens`,
+`peak_cache_tokens`, measured `ttft_sec`/`itl_ms`, and `predicted_score`.
+Compare `QWK(policy, human)` with `QWK(FullCache, human)` and report their
+difference; do not treat exact output matching alone as an accuracy metric.
+
 ## Eviction Policies
 
 | Policy | Description | Reference |

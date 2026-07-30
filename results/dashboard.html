@@ -29,6 +29,7 @@
   header { margin-bottom: 2rem; }
   h1 { font-size: 1.75rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
   .subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+  .status-banner { background: #fff7ed; border: 1px solid #fdba74; color: #9a3412; border-radius: 10px; padding: 0.9rem 1rem; margin-top: 1rem; font-size: 0.85rem; line-height: 1.5; }
   
   /* Summary Cards */
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
@@ -112,7 +113,13 @@
 <div class="container">
   <header>
     <h1>⚡ AES Long-Context KV Cache Dashboard</h1>
-    <p class="subtitle">Automated Essay Scoring (ASAP 2.0 Dataset) — Evaluasi Kompresi Memori & Performa Model (Data Terbaru GPU Cloud)</p>
+    <p class="subtitle">Automated Essay Scoring (ASAP 2.0 Dataset) — Evaluasi Kompresi Memori & Performa Model</p>
+    <div class="status-banner">
+      <strong>STATUS DATA:</strong> angka benchmark yang tampil di bawah adalah hasil legacy sebelum integrasi
+      <code>past_key_values</code> diperbaiki. Jangan gunakan angka speedup/QWK ini sebagai hasil disertasi.
+      Jalankan ulang <code>benchmarks/bench_aes.py</code> di Colab; CSV baru akan memuat eviction aktual,
+      peak cache, TTFT/ITL terukur, dan predicted score.
+    </div>
   </header>
 
   <!-- Summary Stats -->

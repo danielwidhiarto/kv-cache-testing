@@ -26,7 +26,16 @@ class LRUPolicy(EvictionPolicy):
         seq_len = key_cache.shape[2]
 
         # Initialize access tracking
-        if self._last_access is None or self._last_access.shape[0] != seq_len:
+        if self._last_access is None:
+            self._last_access = torch.zeros(seq_len, dtype=torch.long, device=key_cache.device)
+        elif self._last_access.shape[0] < seq_len:
+            padding = torch.zeros(
+                seq_len - self._last_access.shape[0],
+                dtype=self._last_access.dtype,
+                device=key_cache.device,
+            )
+            self._last_access = torch.cat([self._last_access, padding])
+        elif self._last_access.shape[0] > seq_len:
             self._last_access = torch.zeros(seq_len, dtype=torch.long, device=key_cache.device)
 
         # Update access timestamps for tokens that received attention
@@ -46,6 +55,16 @@ class LRUPolicy(EvictionPolicy):
     def reset(self):
         self._last_access = None
         self._step = 0
+
+    def on_evict(self, indices: torch.Tensor) -> None:
+        if self._last_access is not None and indices.numel() > 0:
+            keep = torch.ones(
+                self._last_access.shape[0],
+                dtype=torch.bool,
+                device=self._last_access.device,
+            )
+            keep[indices.to(device=keep.device, dtype=torch.long)] = False
+            self._last_access = self._last_access[keep]
 
     @property
     def name(self) -> str:
