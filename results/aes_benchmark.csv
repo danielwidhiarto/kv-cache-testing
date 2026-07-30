@@ -1,0 +1,36 @@
+sample_idx,prompt_name,human_score,prompt_tokens,max_cache_size,removed_tokens,removed_pct,generated_tokens,policy,latency_sec,ttft_sec,itl_ms,throughput_tok_sec,step_count,generated_output
+1,Exploring Venus,3.0,674,512,162,24.0,20,FullCache,2.1848,1.6386,27.31,317.65,5,Score: 2
+1,Exploring Venus,3.0,674,512,162,24.0,20,aege,1.2774,0.958,15.97,543.31,5,Score: 2
+1,Exploring Venus,3.0,674,512,162,24.0,20,h2o,1.2808,0.9606,16.01,541.83,5,Score: 2
+1,Exploring Venus,3.0,674,512,162,24.0,20,streaming,1.2829,0.9622,16.03,540.97,5,Score: 2
+1,Exploring Venus,3.0,674,512,162,24.0,20,lru,1.281,0.9608,16.01,541.75,5,Score: 2
+2,Facial action coding system,4.0,668,512,156,23.4,20,FullCache,1.2808,0.9606,16.01,537.15,5,Score: 2
+2,Facial action coding system,4.0,668,512,156,23.4,20,aege,1.2799,0.9599,16.0,537.53,5,Score: 2
+2,Facial action coding system,4.0,668,512,156,23.4,20,h2o,1.2779,0.9584,15.97,538.39,5,Score: 2
+2,Facial action coding system,4.0,668,512,156,23.4,20,streaming,1.2801,0.9601,16.0,537.45,5,Score: 2
+2,Facial action coding system,4.0,668,512,156,23.4,20,lru,1.2817,0.9613,16.02,536.8,5,Score: 2
+3,The Face on Mars,5.0,695,512,183,26.3,20,FullCache,1.3211,0.9908,16.52,541.21,5,Score: 2
+3,The Face on Mars,5.0,695,512,183,26.3,20,aege,1.323,0.9922,16.54,540.45,5,Score: 2
+3,The Face on Mars,5.0,695,512,183,26.3,20,h2o,1.3316,0.9987,16.65,536.93,5,Score: 2
+3,The Face on Mars,5.0,695,512,183,26.3,20,streaming,1.327,0.9952,16.59,538.82,5,Score: 2
+3,The Face on Mars,5.0,695,512,183,26.3,20,lru,1.327,0.9952,16.59,538.82,5,Score: 2
+4,"""A Cowboy Who Rode the Waves""",6.0,644,512,132,20.5,20,FullCache,1.2603,0.9452,15.76,526.85,5,Score: 1
+4,"""A Cowboy Who Rode the Waves""",6.0,644,512,132,20.5,20,aege,1.2579,0.9434,15.72,527.87,5,Score: 1
+4,"""A Cowboy Who Rode the Waves""",6.0,644,512,132,20.5,20,h2o,1.2598,0.9449,15.75,527.06,5,Score: 1
+4,"""A Cowboy Who Rode the Waves""",6.0,644,512,132,20.5,20,streaming,1.2614,0.946,15.77,526.41,5,Score: 1
+4,"""A Cowboy Who Rode the Waves""",6.0,644,512,132,20.5,20,lru,1.26,0.945,15.75,526.98,5,Score: 1
+5,Driverless cars,2.0,640,512,128,20.0,20,FullCache,1.2388,0.9291,15.49,532.76,5,Score: 2
+5,Driverless cars,2.0,640,512,128,20.0,20,aege,1.242,0.9315,15.53,531.4,5,Score: 2
+5,Driverless cars,2.0,640,512,128,20.0,20,h2o,1.2465,0.9348,15.58,529.5,5,Score: 2
+5,Driverless cars,2.0,640,512,128,20.0,20,streaming,1.2456,0.9342,15.57,529.88,5,Score: 2
+5,Driverless cars,2.0,640,512,128,20.0,20,lru,1.2436,0.9327,15.55,530.71,5,Score: 2
+6,Does the electoral college work?,3.0,623,512,111,17.8,20,FullCache,1.1636,0.8727,14.55,552.59,5,Score: 1
+6,Does the electoral college work?,3.0,623,512,111,17.8,20,aege,1.1614,0.8711,14.52,553.64,5,Score: 1
+6,Does the electoral college work?,3.0,623,512,111,17.8,20,h2o,1.1651,0.8738,14.57,551.88,5,Score: 1
+6,Does the electoral college work?,3.0,623,512,111,17.8,20,streaming,1.1684,0.8763,14.6,550.34,5,Score: 1
+6,Does the electoral college work?,3.0,623,512,111,17.8,20,lru,1.1706,0.8779,14.63,549.3,5,Score: 1
+7,Car-free cities,4.0,603,512,91,15.1,20,FullCache,1.1427,0.857,14.28,545.21,5,Score: 2
+7,Car-free cities,4.0,603,512,91,15.1,20,aege,1.1573,0.868,14.47,538.3,5,Score: 2
+7,Car-free cities,4.0,603,512,91,15.1,20,h2o,1.1541,0.8655,14.43,539.83,5,Score: 2
+7,Car-free cities,4.0,603,512,91,15.1,20,streaming,1.1538,0.8654,14.42,539.95,5,Score: 2
+7,Car-free cities,4.0,603,512,91,15.1,20,lru,1.149,0.8618,14.36,542.2,5,Score: 2
