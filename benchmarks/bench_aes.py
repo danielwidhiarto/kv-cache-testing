@@ -88,7 +88,7 @@ def run_aes_benchmark():
 
     model = AutoModelForCausalLM.from_pretrained(
         args.model,
-        torch_dtype=dtype,
+        dtype=dtype,
         attn_implementation="eager",
         low_cpu_mem_usage=True,
     ).to(device)

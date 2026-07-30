@@ -46,6 +46,7 @@ class CacheManager:
         self._prefill_latency_sec = 0.0
         self._decode_latency_sec = 0.0
         self._decode_model_calls = 0
+        self._use_dynamic_cache = False
 
     @staticmethod
     def _to_legacy_past(past_key_values: Any) -> LegacyPast:
@@ -57,6 +58,26 @@ class CacheManager:
 
         if hasattr(past_key_values, "to_legacy_cache"):
             past_key_values = past_key_values.to_legacy_cache()
+
+        # Transformers versions differ: some DynamicCache releases expose
+        # key_cache/value_cache directly but do not expose to_legacy_cache.
+        if not isinstance(past_key_values, (tuple, list)):
+            key_cache = getattr(past_key_values, "key_cache", None)
+            value_cache = getattr(past_key_values, "value_cache", None)
+            if key_cache is not None and value_cache is not None:
+                past_key_values = tuple(zip(key_cache, value_cache))
+
+        if not isinstance(past_key_values, (tuple, list)):
+            layers = getattr(past_key_values, "layers", None)
+            if layers is not None:
+                converted_layers = []
+                for layer in layers:
+                    key = getattr(layer, "keys", getattr(layer, "key", None))
+                    value = getattr(layer, "values", getattr(layer, "value", None))
+                    if key is None or value is None:
+                        raise TypeError("Could not read keys/values from DynamicCache layer")
+                    converted_layers.append((key, value))
+                past_key_values = tuple(converted_layers)
 
         if not isinstance(past_key_values, (tuple, list)):
             raise TypeError(
@@ -127,10 +148,25 @@ class CacheManager:
                     f"{self.max_cache_size}"
                 )
 
-    def _current_past(self) -> LegacyPast:
+    def _current_past(self) -> Any:
         if not self._caches:
             raise RuntimeError("KV caches have not been initialized")
-        return tuple(cache.get() for cache in self._caches)
+        legacy = tuple(cache.get() for cache in self._caches)
+        if not self._use_dynamic_cache:
+            return legacy
+
+        try:
+            from transformers import DynamicCache
+
+            try:
+                return DynamicCache.from_legacy_cache(legacy, config=self.model.config)
+            except TypeError:
+                return DynamicCache.from_legacy_cache(legacy)
+        except (ImportError, AttributeError) as exc:
+            raise RuntimeError(
+                "The model returned DynamicCache, but this Transformers version "
+                "cannot reconstruct it from pruned KV tensors."
+            ) from exc
 
     def _current_cache_length(self) -> int:
         if not self._caches:
@@ -208,6 +244,7 @@ class CacheManager:
             )
         self._prefill_latency_sec = time.perf_counter() - prefill_start
 
+        self._use_dynamic_cache = not isinstance(outputs.past_key_values, (tuple, list))
         prompt_past = self._to_legacy_past(outputs.past_key_values)
         self._append_past(prompt_past, outputs.attentions, only_last=False)
         self._prefill_count = 1
@@ -285,6 +322,7 @@ class CacheManager:
         self._prefill_latency_sec = 0.0
         self._decode_latency_sec = 0.0
         self._decode_model_calls = 0
+        self._use_dynamic_cache = False
 
     def cleanup(self) -> None:
         """Compatibility no-op; the implementation no longer uses hooks."""

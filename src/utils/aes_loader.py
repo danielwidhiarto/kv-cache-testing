@@ -1,6 +1,7 @@
 """AES Dataset Loader — Utilities for loading ASAP 2.0 essay data and formatting long-context LLM prompts."""
 
 import os
+import shutil
 import pandas as pd
 from typing import List, Dict, Any, Optional
 
@@ -10,18 +11,49 @@ class AESDatasetLoader:
 
     def __init__(self, csv_path: str = "dataset/ASAP2_train_sourcetexts.csv"):
         zip_path = "dataset/ASAP2_train_sourcetexts.zip"
-        if not os.path.exists(csv_path) and os.path.exists(zip_path):
-            import zipfile
-            print(f"📦 Extracting ASAP 2.0 dataset from {zip_path}...")
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall("dataset/")
-            print("✓ ASAP 2.0 dataset extracted successfully!")
+        if os.path.exists(zip_path) and not self._is_asap_csv(csv_path):
+            self._extract_asap_csv(zip_path, csv_path)
 
         if not os.path.exists(csv_path):
             os.makedirs(os.path.dirname(csv_path), exist_ok=True)
             self._generate_fallback_dataset(csv_path)
         self.csv_path = csv_path
         self._df: Optional[pd.DataFrame] = None
+
+    @staticmethod
+    def _is_asap_csv(csv_path: str) -> bool:
+        """Return whether a CSV has the real ASAP 2.0 schema.
+
+        The repository archive stores the CSV with a ``dataset/`` prefix.
+        Extracting it into ``dataset/`` naively creates ``dataset/dataset`` and
+        makes the loader incorrectly fall back to synthetic data.
+        """
+        if not os.path.exists(csv_path):
+            return False
+        try:
+            columns = set(pd.read_csv(csv_path, nrows=0).columns)
+            return {"essay_id", "score", "full_text", "assignment", "source_text_1"}.issubset(columns)
+        except Exception:
+            return False
+
+    @staticmethod
+    def _extract_asap_csv(zip_path: str, csv_path: str) -> None:
+        import zipfile
+
+        print(f"📦 Extracting ASAP 2.0 dataset from {zip_path}...")
+        os.makedirs(os.path.dirname(csv_path) or ".", exist_ok=True)
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            candidates = [
+                name for name in zip_ref.namelist()
+                if name.rstrip("/").endswith(os.path.basename(csv_path))
+            ]
+            if not candidates:
+                raise FileNotFoundError(
+                    f"Could not find {os.path.basename(csv_path)} inside {zip_path}"
+                )
+            with zip_ref.open(candidates[0], "r") as source, open(csv_path, "wb") as target:
+                shutil.copyfileobj(source, target)
+        print(f"✓ ASAP 2.0 dataset extracted successfully to {csv_path}!")
 
 
     def _generate_fallback_dataset(self, csv_path: str):
@@ -304,5 +336,4 @@ ASSIGNMENT: Discuss the social and environmental impacts of transforming modern 
             "Do NOT write anything before 'Score:'. Begin your response with 'Score:' immediately."
         )
         return prompt
-
 
