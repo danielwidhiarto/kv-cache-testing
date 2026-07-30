@@ -17,15 +17,17 @@ class H2OPolicy(EvictionPolicy):
     are evicted first.
     """
 
-    def __init__(self, heavy_ratio: float = 0.1):
+    def __init__(self, heavy_ratio: float = 0.1, sink_size: int = 4, window_size: int = 64):
         """Initialize H2O policy.
 
         Args:
             heavy_ratio: Fraction of cache reserved for heavy hitters.
-                E.g., 0.1 means 10% of cache is always reserved for
-                the highest-attention tokens.
+            sink_size: Number of initial tokens to protect (attention sinks).
+            window_size: Number of recent tokens to protect.
         """
         self.heavy_ratio = heavy_ratio
+        self.sink_size = sink_size
+        self.window_size = window_size
         self._cumulative_attn: Optional[torch.Tensor] = None
 
     def select_evict(
@@ -36,40 +38,42 @@ class H2OPolicy(EvictionPolicy):
         num_to_evict: int = 1,
     ) -> torch.Tensor:
         seq_len = key_cache.shape[2]
+        device = key_cache.device
+
+        # Protect sinks and window
+        protected_end = self.sink_size
+        window_start = max(self.sink_size, seq_len - self.window_size)
+
+        evictable_count = window_start - protected_end
+        if evictable_count <= 0:
+            return torch.tensor([], dtype=torch.long, device=device)
+
+        num_to_evict = min(num_to_evict, evictable_count)
+        if num_to_evict <= 0:
+            return torch.tensor([], dtype=torch.long, device=device)
 
         # Initialize cumulative attention
         if self._cumulative_attn is None:
-            self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=key_cache.device)
+            self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
         elif self._cumulative_attn.shape[0] < seq_len:
             padding = torch.zeros(
                 seq_len - self._cumulative_attn.shape[0],
                 dtype=self._cumulative_attn.dtype,
-                device=key_cache.device,
+                device=device,
             )
             self._cumulative_attn = torch.cat([self._cumulative_attn, padding])
         elif self._cumulative_attn.shape[0] > seq_len:
-            self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=key_cache.device)
+            self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
 
         # Accumulate attention scores
         if attention_scores is not None:
-            # attention_scores: [batch, num_heads, query_len, seq_len]
-            # Sum across batch, heads, query positions
             attn_sum = attention_scores.float().sum(dim=(0, 1, 2))  # [seq_len]
             self._cumulative_attn += attn_sum
 
-        # Don't evict heavy hitters
-        heavy_count = max(1, int(seq_len * self.heavy_ratio))
-        if seq_len - num_to_evict < heavy_count:
-            num_to_evict = max(0, seq_len - heavy_count)
-
-        if num_to_evict <= 0:
-            return torch.tensor([], dtype=torch.long, device=key_cache.device)
-
-        # Evict tokens with lowest cumulative attention
-        _, lowest_indices = torch.topk(
-            self._cumulative_attn, num_to_evict, largest=False
-        )
-        return lowest_indices
+        # Evict tokens with lowest cumulative attention in middle range only
+        middle_attn = self._cumulative_attn[protected_end:window_start]
+        _, lowest_local = torch.topk(middle_attn, num_to_evict, largest=False)
+        return lowest_local + protected_end
 
     def reset(self):
         self._cumulative_attn = None

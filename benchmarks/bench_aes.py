@@ -43,9 +43,9 @@ def get_policy(name: str, cache_budget: int):
     elif name == "aege":
         return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=0.3)
     elif name == "h2o":
-        return H2OPolicy(heavy_ratio=0.1)
+        return H2OPolicy(heavy_ratio=0.1, sink_size=4, window_size=min(64, cache_budget // 2))
     elif name == "streaming":
-        return StreamingPolicy(sink_size=4, window_size=min(256, cache_budget - 4))
+        return StreamingPolicy(sink_size=4, window_size=max(1, cache_budget - 4))
     elif name == "lru":
         return LRUPolicy()
     else:
