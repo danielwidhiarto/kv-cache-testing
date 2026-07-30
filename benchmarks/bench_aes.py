@@ -8,7 +8,7 @@ import random
 import re
 import pandas as pd
 import torch
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -25,12 +25,11 @@ from src.metrics.quality_metrics import quadratic_weighted_kappa
 
 def parse_args():
     parser = argparse.ArgumentParser(description="AES Long-Context KV Cache Benchmark")
-    parser.add_argument("--model", type=str, default="gpt2", help="Model name or path")
+    parser.add_argument("--model", type=str, default="Qwen/Qwen2.5-7B-Instruct", help="Model name or path")
 
-
-    parser.add_argument("--num-samples", type=int, default=3, help="Number of AES essay samples to test")
-    parser.add_argument("--max-cache-size", type=int, default=256, help="Max KV cache size budget")
-    parser.add_argument("--max-new-tokens", type=int, default=64, help="Max new tokens to generate per sample")
+    parser.add_argument("--num-samples", type=int, default=14, help="Number of AES essay samples to test")
+    parser.add_argument("--max-cache-size", type=int, default=768, help="Max KV cache size budget")
+    parser.add_argument("--max-new-tokens", type=int, default=128, help="Max new tokens to generate per sample")
     parser.add_argument("--dataset-path", type=str, default="dataset/ASAP2_train_sourcetexts.csv", help="Path to ASAP 2.0 CSV")
     parser.add_argument("--output-dir", type=str, default="results", help="Directory to save CSV benchmark output")
     parser.add_argument("--seed", type=int, default=42, help="Sampling and policy-order seed")
@@ -53,10 +52,27 @@ def get_policy(name: str, cache_budget: int):
         raise ValueError(f"Unknown policy: {name}")
 
 
-def extract_score(text: str):
-    """Extract the first explicit Score: 1-6 value from model output."""
-    match = re.search(r"^\s*score\s*:\s*([1-6])\b", str(text), re.IGNORECASE | re.MULTILINE)
-    return int(match.group(1)) if match else None
+def extract_score(text: str) -> Optional[int]:
+    """Extract numeric score (1-6) from model output with fallback patterns."""
+    if not text:
+        return None
+    
+    # 1. Direct "Score: X" or "score : X" (case-insensitive)
+    match = re.search(r"score\s*:\s*([1-6])\b", str(text), re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+
+    # 2. "Score X/6" or "score of X"
+    match = re.search(r"score\s*(?:of|is|=)?\s*([1-6])\s*(?:/|out of\s*6)?", str(text), re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+
+    # 3. Last standalone digit 1-6 near end of text
+    digits = re.findall(r"\b([1-6])\b", str(text))
+    if digits:
+        return int(digits[-1])
+
+    return None
 
 
 def run_aes_benchmark():
