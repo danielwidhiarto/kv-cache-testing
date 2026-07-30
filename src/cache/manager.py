@@ -160,9 +160,14 @@ class CacheManager:
 
             try:
                 return DynamicCache.from_legacy_cache(legacy, config=self.model.config)
-            except TypeError:
-                return DynamicCache.from_legacy_cache(legacy)
-        except (ImportError, AttributeError) as exc:
+            except (AttributeError, TypeError):
+                # Transformers v5 removed from_legacy_cache(); its constructor
+                # now accepts the legacy layer iterable directly.
+                try:
+                    return DynamicCache(legacy, config=self.model.config)
+                except TypeError:
+                    return DynamicCache(legacy)
+        except ImportError as exc:
             raise RuntimeError(
                 "The model returned DynamicCache, but this Transformers version "
                 "cannot reconstruct it from pruned KV tensors."
