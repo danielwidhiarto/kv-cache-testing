@@ -55,7 +55,7 @@ def get_policy(name: str, cache_budget: int):
 
 def extract_score(text: str):
     """Extract the first explicit Score: 1-6 value from model output."""
-    match = re.search(r"^\s*score\s*:\s*([1-6])\b", str(text), re.IGNORECASE)
+    match = re.search(r"^\s*score\s*:\s*([1-6])\b", str(text), re.IGNORECASE | re.MULTILINE)
     return int(match.group(1)) if match else None
 
 
