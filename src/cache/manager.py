@@ -293,7 +293,7 @@ class CacheManager:
             with torch.no_grad():
                 outputs = self.model(
                     input_ids=next_token.to(self.device),
-                    attention_mask=decode_attention_mask,
+                    attention_mask=None,
                     position_ids=position_ids,
                     past_key_values=self._current_past(),
                     output_attentions=need_attentions,
