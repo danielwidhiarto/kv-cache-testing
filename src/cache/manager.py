@@ -171,7 +171,7 @@ class CacheManager:
             from transformers import DynamicCache
 
             try:
-                return DynamicCache.from_legacy_cache(legacy, config=self.model.config)
+                return DynamicCache.from_legacy_cache(legacy)
             except (AttributeError, TypeError):
                 # Transformers v5 removed from_legacy_cache(); its constructor
                 # now accepts the legacy layer iterable directly.
