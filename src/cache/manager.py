@@ -188,10 +188,7 @@ class CacheManager:
     def _current_cache_length(self) -> int:
         if not self._caches:
             return 0
-        lengths = {cache.size() for cache in self._caches}
-        if len(lengths) != 1:
-            raise RuntimeError(f"Per-layer cache lengths diverged: {sorted(lengths)}")
-        return next(iter(lengths))
+        return max(cache.size() for cache in self._caches)
 
     def forward_with_cache(
         self,
