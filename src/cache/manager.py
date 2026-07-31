@@ -149,10 +149,15 @@ class CacheManager:
                 self._peak_cache_tokens,
                 sum(cache.size() for cache in self._caches),
             )
-            if self.policy is not None and after > self.max_cache_size:
+            pol_max_size = (
+                self._caches[layer_idx]._policy.get_max_size(self.max_cache_size)
+                if hasattr(self._caches[layer_idx], "_policy") and hasattr(self._caches[layer_idx]._policy, "get_max_size")
+                else self.max_cache_size
+            )
+            if self.policy is not None and after > pol_max_size:
                 raise RuntimeError(
                     f"Layer {layer_idx} exceeded cache budget: {after} > "
-                    f"{self.max_cache_size}"
+                    f"{pol_max_size}"
                 )
 
     def _current_past(self) -> Any:
