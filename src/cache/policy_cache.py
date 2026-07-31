@@ -40,8 +40,14 @@ class PolicyCache(KVCache):
             self._keys = torch.cat([self._keys, key], dim=2)
             self._values = torch.cat([self._values, value], dim=2)
 
-        while self.size() > self._max_size:
-            overflow = self.size() - self._max_size
+        target_max_size = (
+            self._policy.get_max_size(self._max_size)
+            if hasattr(self._policy, "get_max_size")
+            else self._max_size
+        )
+
+        while self.size() > target_max_size:
+            overflow = self.size() - target_max_size
             indices = self._policy.select_evict(
                 self._keys,
                 self._values,

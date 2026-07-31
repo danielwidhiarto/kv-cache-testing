@@ -47,6 +47,17 @@ class AEGEPolicy(EvictionPolicy):
         self._entropy_history: Optional[torch.Tensor] = None
         self._has_entropy = False
 
+    def get_max_size(self, default_max_size: int) -> int:
+        """Pyramid layer-adaptive cache budget scaling."""
+        if not self.adaptive_budget or self.layer_idx is None or self.total_layers is None or self.total_layers <= 1:
+            return default_max_size
+
+        depth_ratio = self.layer_idx / (self.total_layers - 1)
+        # Shallow layers (syntax) use 60% budget, deep layers (reasoning) use 120% budget
+        multiplier = 0.6 + 0.6 * depth_ratio
+        min_allowed = self.sink_size + self.window_size + 4
+        return max(min_allowed, int(default_max_size * multiplier))
+
     def _compute_entropy(self, attention_scores: torch.Tensor) -> torch.Tensor:
         """Compute attention entropy per key position.
 
