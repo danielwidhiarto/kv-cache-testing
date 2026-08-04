@@ -37,19 +37,27 @@ def parse_args():
     return parser.parse_args()
 
 
+FAIR_WINDOW = 64
+FAIR_SINK = 4
+
+
 def get_policy(name: str, cache_budget: int):
+    """Fixed fair window: all policies 64 tokens, no cheat streaming 252"""
     if name == "full":
         return None
     elif name == "aege":
-        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=1.0)
+        return AEGEPolicy(sink_size=FAIR_SINK, window_size=FAIR_WINDOW, entropy_weight=0.5)
     elif name == "aege_adaptive":
-        return AEGEPolicy(sink_size=4, window_size=min(64, cache_budget // 2), entropy_weight=1.0, adaptive_budget=True, entropy_threshold=0.5)
+        return AEGEPolicy(sink_size=FAIR_SINK, window_size=FAIR_WINDOW, entropy_weight=0.5, adaptive_budget=True, adaptive_quantile=0.3)
     elif name == "h2o":
-        return H2OPolicy(heavy_ratio=0.1, sink_size=4, window_size=min(64, cache_budget // 2))
+        return H2OPolicy(sink_size=FAIR_SINK, window_size=FAIR_WINDOW)
     elif name == "streaming":
-        return StreamingPolicy(sink_size=4, window_size=max(1, cache_budget - 4))
+        return StreamingPolicy(sink_size=FAIR_SINK, window_size=FAIR_WINDOW)  # was budget-4 cheat 252
     elif name == "lru":
         return LRUPolicy()
+    elif name == "ra_xaege":
+        from src.policies.ra_aege import RAXAEGEPolicy
+        return RAXAEGEPolicy(sink_size=FAIR_SINK, window_size=FAIR_WINDOW, entropy_weight=0.5, retrieval_weight=0.7, adaptive_budget=True)
     else:
         raise ValueError(f"Unknown policy: {name}")
 
