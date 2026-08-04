@@ -38,13 +38,14 @@ class LRUPolicy(EvictionPolicy):
         elif self._last_access.shape[0] > seq_len:
             self._last_access = torch.zeros(seq_len, dtype=torch.long, device=key_cache.device)
 
-        # Update access timestamps for tokens that received attention
         if attention_scores is not None:
-            # attention_scores: [batch, num_heads, query_len, seq_len]
-            # Average across batch, heads, query positions
-            avg_attn = attention_scores.float().mean(dim=(0, 1, 2))  # [seq_len]
-            accessed = avg_attn > avg_attn.median()
-            self._last_access[accessed] = self._step
+            if attention_scores.shape[3] != self._last_access.shape[0]:
+                # stale attention after partial eviction in same append — skip
+                pass
+            else:
+                avg_attn = attention_scores.float().mean(dim=(0, 1, 2))
+                accessed = avg_attn > avg_attn.median()
+                self._last_access[accessed] = self._step
 
         self._step += 1
 

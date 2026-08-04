@@ -40,11 +40,13 @@ class AEGECache(KVCache):
             self._keys = torch.cat([self._keys, key], dim=2)
             self._values = torch.cat([self._values, value], dim=2)
 
+        attn = attention_scores
         while self.size() > self._max_size:
             num_to_evict = self.size() - self._max_size
             indices = self._policy.select_evict(
-                self._keys, self._values, attention_scores, num_to_evict
+                self._keys, self._values, attn, num_to_evict
             )
+            attn = None
             if indices.numel() == 0:
                 break
             self.evict(indices)

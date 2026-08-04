@@ -41,7 +41,17 @@ class SnapPolicy(EvictionPolicy):
         device = key_cache.device
 
         if attention_scores is None:
-            # Fallback: evict from the middle (not ideal, but safe)
+            mid = seq_len // 2
+            return torch.arange(
+                max(0, mid - num_to_evict // 2),
+                min(seq_len, mid + num_to_evict // 2 + 1),
+                dtype=torch.long,
+                device=device,
+            )
+
+        # guard: stale attention larger/smaller than current cache after inner evict loop
+        if attention_scores.shape[3] != seq_len:
+            # fallback to middle eviction to keep loop making progress
             mid = seq_len // 2
             return torch.arange(
                 max(0, mid - num_to_evict // 2),

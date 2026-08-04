@@ -65,10 +65,16 @@ class H2OPolicy(EvictionPolicy):
         elif self._cumulative_attn.shape[0] > seq_len:
             self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
 
-        # Accumulate attention scores
+        # Accumulate attention scores — guard mismatched size after eviction loop
         if attention_scores is not None:
-            attn_sum = attention_scores.float().sum(dim=(0, 1, 2))  # [seq_len]
-            self._cumulative_attn += attn_sum
+            if attention_scores.shape[3] == self._cumulative_attn.shape[0]:
+                attn_sum = attention_scores.float().sum(dim=(0, 1, 2))  # [seq_len]
+                self._cumulative_attn += attn_sum
+            elif attention_scores.shape[3] > self._cumulative_attn.shape[0]:
+                # stale larger attention from pre-evict iteration — skip
+                pass
+            else:
+                pass
 
         # Evict tokens with lowest cumulative attention in middle range only
         middle_attn = self._cumulative_attn[protected_end:window_start]

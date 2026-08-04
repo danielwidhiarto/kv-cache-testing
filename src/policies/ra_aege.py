@@ -106,14 +106,23 @@ class RAXAEGEPolicy(AEGEPolicy):
             self._has_entropy = False
 
         if attention_scores is not None:
-            self._cumulative_attn *= self.temporal_decay
-            self._cumulative_attn += attention_scores.float().sum(dim=(0, 1, 2))
-            if attention_scores.shape[2] > 1 or not self._has_entropy:
-                ent = self._compute_entropy_per_key(attention_scores)
-                self._entropy_history[: ent.shape[0]] = ent
-                self._has_entropy = True
+            attn_len = int(attention_scores.shape[3]) if attention_scores.dim() >= 4 else int(self._cumulative_attn.shape[0])
+            if attn_len == self._cumulative_attn.shape[0]:
+                self._cumulative_attn *= self.temporal_decay
+                self._cumulative_attn += attention_scores.float().sum(dim=(0, 1, 2))
+                if attention_scores.shape[2] > 1 or not self._has_entropy:
+                    ent = self._compute_entropy_per_key(attention_scores)
+                    self._entropy_history[: ent.shape[0]] = ent
+                    self._has_entropy = True
+                else:
+                    self._entropy_history *= self.temporal_decay
+            elif attn_len < self._cumulative_attn.shape[0]:
+                pass
             else:
-                self._entropy_history *= self.temporal_decay
+                self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
+                self._entropy_history = torch.zeros(seq_len, dtype=torch.float32, device=device)
+                self._has_entropy = False
+                pass
 
         ms, me = protected_end, window_start
         mid_attn = self._cumulative_attn[ms:me]
@@ -158,6 +167,16 @@ class RAXAEGEPolicy(AEGEPolicy):
         # ensure lowest not from never_mask (they are 2.5 high)
         return (lowest + ms).to(device)
 
+    def reset(self):
+        super().reset()
+
+    def on_evict(self, indices: torch.Tensor) -> None:
+        super().on_evict(indices)
+
     @property
     def name(self) -> str:
         return f"ra_xaege_s{self.sink_size}_w{self.window_size}_ew{self.entropy_weight}_rw{self.retrieval_weight}"
+
+    @property
+    def requires_attention_scores(self) -> bool:
+        return True

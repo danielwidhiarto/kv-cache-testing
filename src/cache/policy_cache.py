@@ -46,14 +46,20 @@ class PolicyCache(KVCache):
             else self._max_size
         )
 
+        # Attention scores correspond to the cache state *before* any eviction
+        # in this append call. After the first eviction the cache shrinks but
+        # the original attention tensor still has the old seq_len, so reusing it
+        # causes size mismatch (e.g. 1423 vs 2023). Only pass it once.
+        attn_for_evict = attention_scores
         while self.size() > target_max_size:
             overflow = self.size() - target_max_size
             indices = self._policy.select_evict(
                 self._keys,
                 self._values,
-                attention_scores=attention_scores,
+                attention_scores=attn_for_evict,
                 num_to_evict=overflow,
             )
+            attn_for_evict = None
 
             # A policy must not be able to leave an over-budget cache forever.
             # This fallback is only for invalid/incompatible policy settings;

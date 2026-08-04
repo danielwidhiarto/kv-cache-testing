@@ -144,15 +144,30 @@ class AEGEPolicy(EvictionPolicy):
             self._has_entropy = False
 
         if attention_scores is not None:
-            self._cumulative_attn *= self.temporal_decay
-            self._cumulative_attn += attention_scores.float().sum(dim=(0, 1, 2))
-            query_len = attention_scores.shape[2]
-            if query_len > 1 or not self._has_entropy:
-                ent = self._compute_entropy_per_key(attention_scores)  # [seq]
-                self._entropy_history[: ent.shape[0]] = ent
-                self._has_entropy = True
+            attn_len = int(attention_scores.shape[3])  # [B, H, q, seq]
+            # If caller passed pre-evict attention (size > cache), we have already
+            # accounted for it in the first iteration — skip to avoid 1423 vs 2023 crash.
+            if attn_len == self._cumulative_attn.shape[0]:
+                self._cumulative_attn *= self.temporal_decay
+                self._cumulative_attn += attention_scores.float().sum(dim=(0, 1, 2))
+                query_len = attention_scores.shape[2]
+                if query_len > 1 or not self._has_entropy:
+                    ent = self._compute_entropy_per_key(attention_scores)  # [seq]
+                    self._entropy_history[: ent.shape[0]] = ent
+                    self._has_entropy = True
+                else:
+                    self._entropy_history *= self.temporal_decay
+            elif attn_len < self._cumulative_attn.shape[0]:
+                # stale smaller attention — ignore (cache was already trimmed by on_evict)
+                pass
             else:
-                self._entropy_history *= self.temporal_decay
+                # stale larger attention — reset to match new seq_len then apply
+                # defensive: occurs when PolicyCache reused old attention_scores
+                self._cumulative_attn = torch.zeros(seq_len, dtype=torch.float32, device=device)
+                self._entropy_history = torch.zeros(seq_len, dtype=torch.float32, device=device)
+                self._has_entropy = False
+                # cannot safely use oversized attention — skip accumulation
+                pass
 
         middle_start = protected_end
         middle_end = window_start
