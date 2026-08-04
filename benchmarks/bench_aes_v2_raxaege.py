@@ -75,15 +75,17 @@ def build_rag_feedback_prompt(
         start = sum(len(p) for p in parts)
         parts.append(text)
         end = start + len(text)
+        if tag is None:
+            return start, end
         if tag == "rubric":
             meta["rubric_char"].append((start, end))
         elif tag == "source":
             meta["source_char"].append((start, end))
-        elif tag.startswith("retrieved"):
-            # tag format retrieved_i:score:label
+        elif isinstance(tag, str) and tag.startswith("retrieved"):
+            # tag format retrieved:score:label
             try:
                 pieces = tag.split(":")
-                sc = float(pieces[1])
+                sc = float(pieces[1]) if len(pieces) > 1 else 0.5
                 lab = int(float(pieces[2])) if len(pieces) > 2 else 0
             except:
                 sc = 0.5
