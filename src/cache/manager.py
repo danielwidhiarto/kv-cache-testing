@@ -163,7 +163,41 @@ class CacheManager:
     def _current_past(self) -> Any:
         if not self._caches:
             raise RuntimeError("KV caches have not been initialized")
-        legacy = tuple(cache.get() for cache in self._caches)
+
+        # Qwen2/Gemma/Llama with eager attn builds a single 4D causal mask from
+        # past_key_values[0] length. If per-layer adaptive pyramid produces
+        # 615 vs 638, the mask (615) mismatches deeper layer weights (638):
+        #   eager_attention_forward: attn_weights + attention_mask  -> 638 vs 615 crash
+        # Fix: present uniform length to the model (min across layers) while
+        # keeping internal per-layer caches varying for eviction accounting.
+        sizes = [cache.size() for cache in self._caches]
+        if len(set(sizes)) > 1:
+            common = min(sizes)
+            uniform = []
+            for cache in self._caches:
+                k, v = cache.get()
+                cur = k.shape[2]
+                if cur > common:
+                    # keep sink tokens + most recent tail to preserve attention sinks
+                    sink = int(getattr(getattr(cache, "_policy", None), "sink_size", 4) or 4)
+                    sink = max(0, min(sink, common))
+                    tail = common - sink
+                    if tail > 0:
+                        k1 = k[:, :, :sink, :] if sink > 0 else k[:, :, :0, :]
+                        k2 = k[:, :, cur - tail :, :]
+                        k_u = torch.cat([k1, k2], dim=2) if sink > 0 else k2
+                        v1 = v[:, :, :sink, :] if sink > 0 else v[:, :, :0, :]
+                        v2 = v[:, :, cur - tail :, :]
+                        v_u = torch.cat([v1, v2], dim=2) if sink > 0 else v2
+                    else:
+                        k_u = k[:, :, :common, :]
+                        v_u = v[:, :, :common, :]
+                    uniform.append((k_u, v_u))
+                else:
+                    uniform.append((k, v))
+            legacy = tuple(uniform)
+        else:
+            legacy = tuple(cache.get() for cache in self._caches)
         if not self._use_dynamic_cache:
             return legacy
 
@@ -188,7 +222,11 @@ class CacheManager:
     def _current_cache_length(self) -> int:
         if not self._caches:
             return 0
-        return max(cache.size() for cache in self._caches)
+        # Use min to match uniform past presented to model.
+        # Qwen2 eager builds causal mask from first layer past length,
+        # so max vs min mismatch => 638 vs 615 crash.
+        # Uniforming to min ensures mask == kv_len for every layer.
+        return min(cache.size() for cache in self._caches)
 
     def forward_with_cache(
         self,
